@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Trophy, Home, Crown, Star, Sparkles, Sword, Scroll } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import AdBanner from "@/components/AdBanner";
 
 export default function GuestResults() {
     const { roomId } = useParams() as { roomId: string };
@@ -138,6 +139,9 @@ export default function GuestResults() {
                 </div>
 
                 <div className="pt-12 flex flex-col items-center gap-6">
+                    <div className="max-w-md w-full">
+                        <AdBanner adSlot="results_bottom" />
+                    </div>
                     <Button onClick={() => router.push("/")} className="fantasy-button h-16 px-16 text-xl group">
                         <Home className="mr-3 h-6 w-6" /> ホームへ戻る
                     </Button>

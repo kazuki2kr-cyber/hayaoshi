@@ -12,6 +12,7 @@ import { generateRoomId } from "@/lib/utils-game";
 import { Plus, Sparkles, Sword } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import AdBanner from "@/components/AdBanner";
 
 export default function Home() {
   const { user, loginAnonymously } = useAuth();
@@ -191,6 +192,9 @@ export default function Home() {
               <p className="text-center text-amber-200/30 text-xs">
                 コードを入力してクイズに参加
               </p>
+            </div>
+            <div className="px-6 space-y-4">
+              <AdBanner adSlot="home_bottom" />
             </div>
           </CardContent>
 
