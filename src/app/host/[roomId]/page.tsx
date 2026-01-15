@@ -26,7 +26,7 @@ export default function HostDashboard() {
     const [players, setPlayers] = useState<Player[]>([]);
     const [roomStatus, setRoomStatus] = useState<string>("waiting");
     const [hostName, setHostName] = useState<string>("");
-    const [roomName, setRoomName] = useState<string>("fantasy room");
+    const [roomName, setRoomName] = useState<string>("Fantasy Room");
     const { toast } = useToast();
     const router = useRouter();
 
@@ -121,7 +121,7 @@ export default function HostDashboard() {
                                 value={roomName}
                                 onChange={(e) => setRoomName(e.target.value)}
                                 onBlur={handleUpdateRoomName}
-                                className="bg-black/40 border-amber-900/50 text-white font-bold h-10 mt-1 max-w-md focus:border-amber-500 transition-colors"
+                                className="bg-black/40 border-amber-900/50 text-white font-bold h-10 mt-1 max-w-md focus:border-amber-500 transition-colors font-serif tracking-wider"
                             />
                         </div>
                     </div>
@@ -145,7 +145,7 @@ export default function HostDashboard() {
                 {/* Primary Action: Create Questions */}
                 <Button
                     onClick={() => router.push(`/host/${roomId}/edit`)}
-                    className="w-full text-2xl h-24 fantasy-button border-2 border-amber-500/50 shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:scale-[1.01] transition-transform"
+                    className="w-full text-2xl h-24 fantasy-button border-2 border-amber-500/50 shadow-[0_0_20px_rgba(251,191,36,0.2)] hover:scale-[1.01] transition-transform text-amber-100"
                 >
                     <Settings className="mr-3 h-8 w-8" />
                     <div className="flex flex-col items-start">

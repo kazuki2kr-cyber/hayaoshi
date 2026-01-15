@@ -105,7 +105,7 @@ const QuestionItem = memo(({
                         <span className="w-10 h-10 rounded-lg bg-amber-950 border border-amber-500 flex items-center justify-center font-black text-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.2)]">
                             {idx + 1}
                         </span>
-                        <CardTitle className="text-xl font-bold tracking-widest text-amber-100 uppercase">第 {idx + 1} の試練</CardTitle>
+                        <CardTitle className="text-xl font-bold tracking-widest text-amber-100 uppercase">第 {idx + 1} 問</CardTitle>
                     </div>
                     <Button
                         variant="ghost"
@@ -118,12 +118,12 @@ const QuestionItem = memo(({
                 </CardHeader>
                 <CardContent className="space-y-8">
                     <div className="space-y-2">
-                        <Label className="rpg-label">試練の問い (問題文)</Label>
+                        <Label className="rpg-label">問題文</Label>
                         <Textarea
                             value={localText}
                             onChange={(e) => setLocalText(e.target.value)}
                             onBlur={handleTextBlur}
-                            placeholder="例：伝説の剣の名前は何？"
+                            placeholder="例：日本の首都はどこ？"
                             className="min-h-[100px] bg-black/40 border-amber-900/50 text-white text-lg focus:border-amber-500 transition-colors resize-none"
                         />
                     </div>
@@ -184,9 +184,9 @@ const QuestionItem = memo(({
                             </div>
 
                             <div className="p-4 rounded-xl bg-amber-900/10 border border-amber-500/20 space-y-3">
-                                <p className="rpg-label !mb-0 text-[10px]">魔導士の助言</p>
-                                <p className="text-xs text-amber-200/70 leading-relaxed italic">
-                                    「正しい答えのラジオボタンにチェックを入れるのを忘れるな。さもなくば、誰もその試練を突破できぬだろう。」
+                                <p className="rpg-label !mb-0 text-[10px] text-red-400">注意</p>
+                                <p className="text-xs text-amber-200/70 leading-relaxed font-bold">
+                                    正解のラジオボタンにチェックを入れてください。チェックがないと、誰も正解できなくなります。
                                 </p>
                             </div>
                         </div>

@@ -157,7 +157,7 @@ export default function Home() {
               <Button
                 onClick={handleCreateRoom}
                 disabled={isLoading}
-                className="w-full fantasy-button py-7 text-lg group relative overflow-hidden"
+                className="w-full fantasy-button py-7 text-lg group relative overflow-hidden text-amber-100 font-bold"
               >
                 <span className="relative z-10 flex items-center">
                   <Plus className="mr-2 h-5 w-5 transition-transform group-hover:rotate-90" />
@@ -196,7 +196,7 @@ export default function Home() {
 
           <CardFooter className="justify-center border-t border-white/5 pt-6 pb-4">
             <p className="text-white/20 text-[10px] uppercase tracking-[0.5em] font-black">
-              © 2026 Fantasy Quizzes Kingdom
+              © 2026 sparks-station.com
             </p>
           </CardFooter>
         </Card>
