@@ -87,12 +87,17 @@ export default function HostPlay() {
         } else if (room.currentPhase === "leaderboard") {
             const nextIndex = room.currentQuestionIndex + 1;
             if (nextIndex < questions.length) {
+                // Determine time limit for the next question
+                const nextQ = questions[nextIndex];
+                const limit = nextQ.timeLimit || 20;
+
+                // Explicitly set startTime
                 await updateDoc(doc(db, "rooms", roomId), {
                     currentQuestionIndex: nextIndex,
                     currentPhase: "question",
                     startTime: Date.now()
                 });
-                setTimeLeft(questions[nextIndex].timeLimit);
+                setTimeLeft(limit);
             } else {
                 await updateDoc(doc(db, "rooms", roomId), {
                     status: "finished",
@@ -132,19 +137,27 @@ export default function HostPlay() {
                                 {timeLeft.toFixed(1)}s
                             </span>
                         </div>
-                        <AnimatePresence>
-                            {room.currentPhase !== "question" && (
+                        <div className="flex gap-2">
+                            {room.currentPhase === "question" && (
+                                <Button
+                                    size="lg"
+                                    onClick={handleTimeUp}
+                                    className="fantasy-button h-16 px-6 text-lg bg-red-900/80 border-red-500/50 hover:bg-red-800"
+                                >
+                                    強制終了
+                                </Button>
+                            )}
+                            {(room.currentPhase !== "question" || timeLeft <= 0) && (
                                 <motion.div
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: 20 }}
                                 >
                                     <Button size="lg" onClick={handleNextPhase} className="fantasy-button h-16 px-10 text-xl group">
                                         {room.currentPhase === "leaderboard" && room.currentQuestionIndex === questions.length - 1 ? "冒険を完遂する" : "次の段階へ"} <ChevronRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                 </motion.div>
                             )}
-                        </AnimatePresence>
+                        </div>
                     </div>
                 </header>
 
