@@ -8,7 +8,7 @@ import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Play, ChevronRight, Trophy, Timer, Swords, ShieldCheck } from "lucide-react";
+import { Users, Play, ChevronRight, Trophy, Timer, Swords, ShieldCheck, Crown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HostPlay() {
@@ -174,18 +174,18 @@ export default function HostPlay() {
                                         <div
                                             key={i}
                                             className={`p-6 rounded-2xl border-2 flex items-center gap-6 transition-all relative overflow-hidden ${room.currentPhase === "result" && i === currentQuestion.correctAnswer
-                                                    ? "bg-green-600/20 border-green-500 scale-105 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
-                                                    : room.currentPhase === "result"
-                                                        ? "bg-black/20 border-white/5 opacity-30"
-                                                        : "bg-black/40 border-amber-900/30"
+                                                ? "bg-green-600/20 border-green-500 scale-105 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
+                                                : room.currentPhase === "result"
+                                                    ? "bg-black/20 border-white/5 opacity-30"
+                                                    : "bg-black/40 border-amber-900/30"
                                                 }`}
                                         >
                                             {room.currentPhase === "result" && i === currentQuestion.correctAnswer && (
                                                 <div className="absolute top-0 right-0 p-2 bg-green-500 text-black font-black text-[10px] uppercase tracking-widest rounded-bl-xl">Correct</div>
                                             )}
                                             <span className={`w-10 h-10 rounded-lg flex items-center justify-center font-black text-xl ${room.currentPhase === "result" && i === currentQuestion.correctAnswer
-                                                    ? "bg-green-500 text-black"
-                                                    : "bg-amber-950 text-amber-500"
+                                                ? "bg-green-500 text-black"
+                                                : "bg-amber-950 text-amber-500"
                                                 }`}>
                                                 {i + 1}
                                             </span>
