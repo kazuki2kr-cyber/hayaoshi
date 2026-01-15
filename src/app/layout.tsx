@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shibaura Quiz - 究極のファンタジー早押しクイズ",
+  title: "Fantasy Quizzes Kingdom - 究極のファンタジー早押しクイズ",
   description: "リアルタイムで競い合う、魔法と知略の早押しクイズ。仲間と共に究極の賢者を目指せ。",
 };
 
