@@ -1,26 +1,132 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.25rem;
+  --background: oklch(0.15 0.05 30);
+  --foreground: oklch(0.95 0.02 60);
+  --card: oklch(0.2 0.04 40);
+  --card-foreground: oklch(0.9 0.05 70);
+  --popover: oklch(0.18 0.04 35);
+  --popover-foreground: oklch(0.9 0.05 70);
+  --primary: oklch(0.7 0.15 80); /* Gold */
+  --primary-foreground: oklch(0.1 0.05 30);
+  --secondary: oklch(0.3 0.08 300); /* Mystic Purple */
+  --secondary-foreground: oklch(0.95 0.02 60);
+  --muted: oklch(0.25 0.03 40);
+  --muted-foreground: oklch(0.7 0.02 60);
+  --accent: oklch(0.45 0.1 200); /* Magic Blue */
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.5 0.2 25);
+  --border: oklch(0.6 0.1 80 / 30%); /* Golden border */
+  --input: oklch(0.25 0.04 35);
+  --ring: oklch(0.7 0.15 80);
+}
+
+.dark {
+  /* Same as root for fantasy theme consistency */
+  --background: oklch(0.1 0.05 30);
+  --foreground: oklch(0.95 0.02 60);
+  --card: oklch(0.15 0.04 40);
+  --card-foreground: oklch(0.9 0.05 70);
+}
+
+@layer components {
+  .fantasy-card {
+    background: linear-gradient(135deg, oklch(0.25 0.05 40), oklch(0.18 0.04 35));
+    border: 3px double oklch(0.7 0.15 80);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(134, 112, 63, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fantasy-card::before {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px solid oklch(0.7 0.15 80 / 20%);
+    pointer-events: none;
+  }
+
+  .gold-text {
+    background: linear-gradient(to bottom, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+  }
+
+  .fantasy-button {
+    background: linear-gradient(to bottom, #4a3b2a 0%, #2a1f14 100%);
+    border: 2px solid #b8860b;
+    color: #fceabb;
+    text-shadow: 0 1px 2px black;
+    transition: all 0.2s;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
+
+  .fantasy-button:hover {
+    background: linear-gradient(to bottom, #5a4b3a 0%, #3a2f24 100%);
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .rpg-label {
+    @apply text-amber-200 uppercase text-xs font-bold tracking-widest mb-1 block;
+    text-shadow: 0 1px 2px black;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }

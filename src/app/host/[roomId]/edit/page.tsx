@@ -1,0 +1,246 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { doc, onSnapshot, collection, updateDoc, getDocs, query, orderBy, deleteDoc, addDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useAuth } from "@/lib/auth-context";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Plus, Trash2, Save, ArrowLeft, Image as ImageIcon, Clock, Trophy, Scroll, Sparkles } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface Question {
+    id?: string;
+    text: string;
+    choices: string[];
+    correctAnswer: number;
+    timeLimit: number;
+    points: number;
+    imageUrl?: string;
+}
+
+export default function QuizEditor() {
+    const { roomId } = useParams() as { roomId: string };
+    const { user, loading: authLoading } = useAuth();
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (authLoading || !user) return;
+
+        const questionsRef = query(collection(db, "rooms", roomId, "questions"), orderBy("createdAt", "asc"));
+        const unsubscribe = onSnapshot(questionsRef, (snapshot) => {
+            setQuestions(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Question)));
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [roomId, user, authLoading]);
+
+    const handleAddQuestion = async () => {
+        const newQuestion: Omit<Question, 'id'> = {
+            text: "",
+            choices: ["", "", "", ""],
+            correctAnswer: 0,
+            timeLimit: 20,
+            points: 1000,
+            createdAt: Date.now()
+        } as any;
+
+        await addDoc(collection(db, "rooms", roomId, "questions"), newQuestion);
+    };
+
+    const handleDeleteQuestion = async (id: string) => {
+        await deleteDoc(doc(db, "rooms", roomId, "questions", id));
+    };
+
+    const handleUpdateQuestion = async (id: string, updates: Partial<Question>) => {
+        await updateDoc(doc(db, "rooms", roomId, "questions", id), updates);
+    };
+
+    const handleChoiceChange = (qIndex: number, cIndex: number, value: string) => {
+        const q = questions[qIndex];
+        const newChoices = [...q.choices];
+        newChoices[cIndex] = value;
+        handleUpdateQuestion(q.id!, { choices: newChoices });
+    };
+
+    const handleSaveAll = () => {
+        toast({
+            title: "試練の書を更新しました",
+            description: "すべての変更が魔導書に刻まれました。",
+        });
+        router.push(`/host/${roomId}`);
+    };
+
+    if (loading) return null;
+
+    return (
+        <div className="min-h-screen relative bg-slate-950 text-white p-4 md:p-8 pb-32">
+            <div className="absolute inset-0 bg-[url('/fantasy-bg.png')] bg-cover bg-center mix-blend-overlay opacity-20 pointer-events-none" />
+
+            <div className="max-w-4xl mx-auto space-y-10 relative z-10">
+                <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-amber-900/30">
+                    <div className="flex items-center gap-4">
+                        <Button variant="ghost" onClick={() => router.push(`/host/${roomId}`)} className="text-amber-400 hover:bg-amber-900/20">
+                            <ArrowLeft className="h-6 w-6" />
+                        </Button>
+                        <div>
+                            <h1 className="text-3xl font-black gold-text italic flex items-center gap-3">
+                                <Scroll className="h-8 w-8 text-amber-500" />
+                                試練の内容を編集
+                            </h1>
+                            <p className="text-amber-200/50 text-sm">冒険者たちに与える謎を作成してください</p>
+                        </div>
+                    </div>
+                    <Button onClick={handleSaveAll} className="fantasy-button px-8 h-14 text-lg">
+                        <Save className="mr-2 h-5 w-5" /> 変更を保存して戻る
+                    </Button>
+                </header>
+
+                <div className="space-y-12">
+                    <AnimatePresence>
+                        {questions.map((q, qIdx) => (
+                            <motion.div
+                                key={q.id}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="relative group"
+                            >
+                                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-amber-900/20 rounded-full group-hover:bg-amber-500/50 transition-colors" />
+
+                                <Card className="fantasy-card border-none bg-black/40">
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+                                        <div className="flex items-center gap-3">
+                                            <span className="w-10 h-10 rounded-lg bg-amber-950 border border-amber-500 flex items-center justify-center font-black text-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.2)]">
+                                                {qIdx + 1}
+                                            </span>
+                                            <CardTitle className="text-xl font-bold tracking-widest text-amber-100 uppercase">第 {qIdx + 1} の試練</CardTitle>
+                                        </div>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => handleDeleteQuestion(q.id!)}
+                                            className="text-red-400 hover:bg-red-900/20 hover:text-red-300"
+                                        >
+                                            <Trash2 className="h-5 w-5" />
+                                        </Button>
+                                    </CardHeader>
+                                    <CardContent className="space-y-8">
+                                        <div className="space-y-2">
+                                            <Label className="rpg-label">試練の問い (問題文)</Label>
+                                            <Textarea
+                                                value={q.text}
+                                                onChange={(e) => handleUpdateQuestion(q.id!, { text: e.target.value })}
+                                                placeholder="例：伝説の剣の名前は何？"
+                                                className="min-h-[100px] bg-black/40 border-amber-900/50 text-white text-lg focus:border-amber-500 transition-colors resize-none"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div className="space-y-4">
+                                                <Label className="rpg-label">選択肢 (正しいものにチェック)</Label>
+                                                <RadioGroup
+                                                    value={q.correctAnswer.toString()}
+                                                    onValueChange={(val) => handleUpdateQuestion(q.id!, { correctAnswer: parseInt(val) })}
+                                                    className="space-y-3"
+                                                >
+                                                    {q.choices.map((choice, cIdx) => (
+                                                        <div key={cIdx} className="flex items-center gap-3 group/choice">
+                                                            <RadioGroupItem
+                                                                value={cIdx.toString()}
+                                                                id={`q${qIdx}-c${cIdx}`}
+                                                                className="border-amber-500 text-amber-500"
+                                                            />
+                                                            <Input
+                                                                value={choice}
+                                                                onChange={(e) => handleChoiceChange(qIdx, cIdx, e.target.value)}
+                                                                placeholder={`選択肢 ${cIdx + 1}`}
+                                                                className="bg-black/20 border-white/10 group-focus-within/choice:border-amber-500 transition-colors"
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </RadioGroup>
+                                            </div>
+
+                                            <div className="space-y-6">
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <div className="space-y-2">
+                                                        <Label className="rpg-label flex items-center gap-2">
+                                                            <Clock className="h-3 w-3" /> 制限時間 (秒)
+                                                        </Label>
+                                                        <Input
+                                                            type="number"
+                                                            value={q.timeLimit}
+                                                            onChange={(e) => handleUpdateQuestion(q.id!, { timeLimit: parseInt(e.target.value) })}
+                                                            className="bg-black/20 border-white/10"
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <Label className="rpg-label flex items-center gap-2">
+                                                            <Trophy className="h-3 w-3" /> 基本配点
+                                                        </Label>
+                                                        <Input
+                                                            type="number"
+                                                            value={q.points}
+                                                            onChange={(e) => handleUpdateQuestion(q.id!, { points: parseInt(e.target.value) })}
+                                                            className="bg-black/20 border-white/10"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="p-4 rounded-xl bg-amber-900/10 border border-amber-500/20 space-y-3">
+                                                    <p className="rpg-label !mb-0 text-[10px]">魔導士の助言</p>
+                                                    <p className="text-xs text-amber-200/50 leading-relaxed italic">
+                                                        「正しい答えのラジオボタンにチェックを入れるのを忘れるな。さもなくば、誰もその試練を突破できぬだろう。」
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+
+                    <Button
+                        onClick={handleAddQuestion}
+                        variant="outline"
+                        className="w-full h-24 border-dashed border-amber-900/50 hover:bg-amber-900/10 hover:border-amber-500 transition-all group rounded-3xl"
+                    >
+                        <div className="flex flex-col items-center gap-2 text-amber-200/50 group-hover:text-amber-400">
+                            <Plus className="h-8 w-8" />
+                            <span className="font-black text-sm uppercase tracking-[0.2em]">新たな試練を追加する</span>
+                        </div>
+                    </Button>
+                </div>
+            </div>
+
+            {/* Bottom Floating Bar */}
+            <div className="fixed bottom-0 left-0 right-0 p-6 bg-slate-950/80 backdrop-blur-md border-t border-amber-900/30 z-20">
+                <div className="max-w-4xl mx-auto flex justify-between items-center">
+                    <p className="text-amber-200/40 text-xs font-bold uppercase tracking-widest">
+                        合計 {questions.length} 個の試練
+                    </p>
+                    <div className="flex gap-4">
+                        <Button variant="ghost" onClick={() => router.push(`/host/${roomId}`)} className="text-white/50 hover:text-white">
+                            破棄して戻る
+                        </Button>
+                        <Button onClick={handleSaveAll} className="fantasy-button px-10">
+                            魔導書を保存する
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}

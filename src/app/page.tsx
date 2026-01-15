@@ -1,65 +1,147 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { doc, setDoc, getDoc, collection } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { generateRoomId } from "@/lib/utils-game";
+import { LogIn, Plus, Users, Sparkles, Sword } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Home() {
+  const { user, loginWithGoogle } = useAuth();
+  const [roomId, setRoomId] = useState("");
+  const router = useRouter();
+
+  const handleCreateRoom = async () => {
+    if (!user) return;
+
+    let newId = generateRoomId();
+    let docRef = doc(db, "rooms", newId);
+    let docSnap = await getDoc(docRef);
+
+    while (docSnap.exists()) {
+      newId = generateRoomId();
+      docRef = doc(db, "rooms", newId);
+      docSnap = await getDoc(docRef);
+    }
+
+    await setDoc(doc(db, "rooms", newId), {
+      status: "waiting",
+      currentQuestionIndex: -1,
+      currentPhase: "waiting",
+      hostId: user.uid,
+      hostName: user.displayName || "賢者",
+      createdAt: Date.now(),
+      shortId: newId
+    });
+
+    router.push(`/host/${newId}`);
+  };
+
+  const handleJoinRoom = () => {
+    if (roomId.length === 6) {
+      router.push(`/room/${roomId}`);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
+      {/* Fantasy Background */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/fantasy-bg.png')", filter: "brightness(0.4) contrast(1.2)" }}
+      />
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-black/20 to-black/60" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md z-10"
+      >
+        <Card className="fantasy-card border-none bg-black/40 backdrop-blur-xl">
+          <CardHeader className="text-center pb-2">
+            <motion.div
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200 }}
+              className="inline-block mx-auto mb-4"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+              <div className="relative">
+                <Sword className="h-12 w-12 text-amber-500 absolute -top-1 -left-1 rotate-[-15deg] opacity-50" />
+                <Sparkles className="h-16 w-16 text-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]" />
+              </div>
+            </motion.div>
+            <CardTitle className="text-5xl font-black italic tracking-tighter gold-text uppercase">
+              Shibaura Quiz
+            </CardTitle>
+            <CardDescription className="text-amber-200/70 font-medium text-lg mt-2">
+              究極のファンタジー早押しクイズ
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="space-y-6 pt-6">
+            {!user ? (
+              <Button
+                onClick={loginWithGoogle}
+                size="lg"
+                className="w-full fantasy-button py-8 text-xl"
+              >
+                <LogIn className="mr-3 h-6 w-6" /> 冒険を始める（Googleログイン）
+              </Button>
+            ) : (
+              <div className="space-y-4">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
+                  <p className="text-amber-100/60 text-sm mb-1 uppercase tracking-widest">Welcome, Hero</p>
+                  <p className="text-xl font-bold text-white">{user.displayName} どの</p>
+                </div>
+
+                <Button
+                  onClick={handleCreateRoom}
+                  className="w-full fantasy-button py-7 text-lg group"
+                >
+                  <Plus className="mr-2 h-5 w-5 transition-transform group-hover:rotate-90" />
+                  ギルドを設立する (新規クイズ作成)
+                </Button>
+
+                <div className="relative py-4">
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-white/10" />
+                  <span className="relative bg-[#1a120b] px-3 text-xs text-white/30 uppercase tracking-[0.3em] font-bold block mx-auto w-fit">
+                    または
+                  </span>
+                </div>
+
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="6桁の召喚コード"
+                    value={roomId}
+                    onChange={(e) => setRoomId(e.target.value)}
+                    maxLength={6}
+                    className="h-14 bg-black/40 border-amber-900/50 text-white placeholder:text-white/20 text-center text-xl font-mono tracking-widest focus:border-amber-500 focus:ring-amber-500"
+                  />
+                  <Button
+                    onClick={handleJoinRoom}
+                    disabled={roomId.length !== 6}
+                    className="h-14 px-6 bg-amber-600 hover:bg-amber-500 text-black font-black disabled:opacity-50 disabled:bg-slate-800"
+                  >
+                    参戦
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+
+          <CardFooter className="justify-center border-t border-white/5 pt-6 pb-4">
+            <p className="text-white/20 text-[10px] uppercase tracking-[0.5em] font-black">
+              © 2026 Shibaura Quiz. All rights reserved.
+            </p>
+          </CardFooter>
+        </Card>
+      </motion.div>
+    </main>
   );
 }
