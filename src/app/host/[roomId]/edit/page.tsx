@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { doc, onSnapshot, collection, updateDoc, getDocs, query, orderBy, deleteDoc, addDoc } from "firebase/firestore";
+import { doc, onSnapshot, collection, updateDoc, query, orderBy, deleteDoc, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Plus, Trash2, Save, ArrowLeft, Image as ImageIcon, Clock, Trophy, Scroll, Sparkles } from "lucide-react";
+import { Plus, Trash2, Save, ArrowLeft, Clock, Trophy, Scroll } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -23,7 +23,180 @@ interface Question {
     timeLimit: number;
     points: number;
     imageUrl?: string;
+    createdAt?: number;
 }
+
+// Memoized Question Item Component to handle local state specifically for IME issues
+const QuestionItem = memo(({
+    q,
+    idx,
+    onUpdate,
+    onDelete
+}: {
+    q: Question,
+    idx: number,
+    onUpdate: (id: string, data: Partial<Question>) => void,
+    onDelete: (id: string) => void
+}) => {
+    // Local state for text inputs to allow smooth IME composition
+    const [localText, setLocalText] = useState(q.text);
+    const [localChoices, setLocalChoices] = useState([...q.choices]);
+    const [localTimeLimit, setLocalTimeLimit] = useState(q.timeLimit);
+    const [localPoints, setLocalPoints] = useState(q.points);
+
+    // Sync local state when prop updates (only if needed, e.g. from other users)
+    // We skip this if the user is actively typing to avoid overwriting, 
+    // but for now simple sync is okay as long as we don't trigger updates on keystroke.
+    useEffect(() => {
+        setLocalText(q.text);
+    }, [q.text]);
+
+    useEffect(() => {
+        setLocalChoices([...q.choices]);
+    }, [q.choices]);
+
+    // Handlers for Blur (Commit changes)
+    const handleTextBlur = () => {
+        if (localText !== q.text) {
+            onUpdate(q.id!, { text: localText });
+        }
+    };
+
+    const handleChoiceBlur = (cIndex: number) => {
+        if (localChoices[cIndex] !== q.choices[cIndex]) {
+            const newChoices = [...q.choices];
+            newChoices[cIndex] = localChoices[cIndex];
+            onUpdate(q.id!, { choices: newChoices });
+        }
+    };
+
+    const handleTimeBlur = () => {
+        if (localTimeLimit !== q.timeLimit) {
+            onUpdate(q.id!, { timeLimit: localTimeLimit });
+        }
+    };
+
+    const handlePointsBlur = () => {
+        if (localPoints !== q.points) {
+            onUpdate(q.id!, { points: localPoints });
+        }
+    };
+
+    // Handlers for Change (Local state only)
+    const handleChoiceChange = (cIndex: number, val: string) => {
+        const newChoices = [...localChoices];
+        newChoices[cIndex] = val;
+        setLocalChoices(newChoices);
+    };
+
+    return (
+        <motion.div
+            layout
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="relative group"
+        >
+            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-amber-900/20 rounded-full group-hover:bg-amber-500/50 transition-colors" />
+
+            <Card className="fantasy-card border-none bg-black/40">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+                    <div className="flex items-center gap-3">
+                        <span className="w-10 h-10 rounded-lg bg-amber-950 border border-amber-500 flex items-center justify-center font-black text-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.2)]">
+                            {idx + 1}
+                        </span>
+                        <CardTitle className="text-xl font-bold tracking-widest text-amber-100 uppercase">第 {idx + 1} の試練</CardTitle>
+                    </div>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onDelete(q.id!)}
+                        className="text-red-400 hover:bg-red-900/20 hover:text-red-300"
+                    >
+                        <Trash2 className="h-5 w-5" />
+                    </Button>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                    <div className="space-y-2">
+                        <Label className="rpg-label">試練の問い (問題文)</Label>
+                        <Textarea
+                            value={localText}
+                            onChange={(e) => setLocalText(e.target.value)}
+                            onBlur={handleTextBlur}
+                            placeholder="例：伝説の剣の名前は何？"
+                            className="min-h-[100px] bg-black/40 border-amber-900/50 text-white text-lg focus:border-amber-500 transition-colors resize-none"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                            <Label className="rpg-label">選択肢 (正しいものにチェック)</Label>
+                            <RadioGroup
+                                value={q.correctAnswer.toString()}
+                                onValueChange={(val) => onUpdate(q.id!, { correctAnswer: parseInt(val) })}
+                                className="space-y-3"
+                            >
+                                {localChoices.map((choice, cIdx) => (
+                                    <div key={cIdx} className="flex items-center gap-3 group/choice">
+                                        <RadioGroupItem
+                                            value={cIdx.toString()}
+                                            id={`q${idx}-c${cIdx}`}
+                                            className="border-amber-500 text-amber-500"
+                                        />
+                                        <Input
+                                            value={choice}
+                                            onChange={(e) => handleChoiceChange(cIdx, e.target.value)}
+                                            onBlur={() => handleChoiceBlur(cIdx)}
+                                            placeholder={`選択肢 ${cIdx + 1}`}
+                                            className="bg-black/20 border-white/10 group-focus-within/choice:border-amber-500 transition-colors"
+                                        />
+                                    </div>
+                                ))}
+                            </RadioGroup>
+                        </div>
+
+                        <div className="space-y-6">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label className="rpg-label flex items-center gap-2">
+                                        <Clock className="h-3 w-3" /> 制限時間 (秒)
+                                    </Label>
+                                    <Input
+                                        type="number"
+                                        value={localTimeLimit}
+                                        onChange={(e) => setLocalTimeLimit(parseInt(e.target.value) || 0)}
+                                        onBlur={handleTimeBlur}
+                                        className="bg-black/20 border-white/10"
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="rpg-label flex items-center gap-2">
+                                        <Trophy className="h-3 w-3" /> 基本配点
+                                    </Label>
+                                    <Input
+                                        type="number"
+                                        value={localPoints}
+                                        onChange={(e) => setLocalPoints(parseInt(e.target.value) || 0)}
+                                        onBlur={handlePointsBlur}
+                                        className="bg-black/20 border-white/10"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="p-4 rounded-xl bg-amber-900/10 border border-amber-500/20 space-y-3">
+                                <p className="rpg-label !mb-0 text-[10px]">魔導士の助言</p>
+                                <p className="text-xs text-amber-200/50 leading-relaxed italic">
+                                    「正しい答えのラジオボタンにチェックを入れるのを忘れるな。さもなくば、誰もその試練を突破できぬだろう。」
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </motion.div>
+    );
+});
+QuestionItem.displayName = "QuestionItem";
 
 export default function QuizEditor() {
     const { roomId } = useParams() as { roomId: string };
@@ -66,13 +239,6 @@ export default function QuizEditor() {
         await updateDoc(doc(db, "rooms", roomId, "questions", id), updates);
     };
 
-    const handleChoiceChange = (qIndex: number, cIndex: number, value: string) => {
-        const q = questions[qIndex];
-        const newChoices = [...q.choices];
-        newChoices[cIndex] = value;
-        handleUpdateQuestion(q.id!, { choices: newChoices });
-    };
-
     const handleSaveAll = () => {
         toast({
             title: "試練の書を更新しました",
@@ -109,106 +275,13 @@ export default function QuizEditor() {
                 <div className="space-y-12">
                     <AnimatePresence>
                         {questions.map((q, qIdx) => (
-                            <motion.div
+                            <QuestionItem
                                 key={q.id}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                className="relative group"
-                            >
-                                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-amber-900/20 rounded-full group-hover:bg-amber-500/50 transition-colors" />
-
-                                <Card className="fantasy-card border-none bg-black/40">
-                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-                                        <div className="flex items-center gap-3">
-                                            <span className="w-10 h-10 rounded-lg bg-amber-950 border border-amber-500 flex items-center justify-center font-black text-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.2)]">
-                                                {qIdx + 1}
-                                            </span>
-                                            <CardTitle className="text-xl font-bold tracking-widest text-amber-100 uppercase">第 {qIdx + 1} の試練</CardTitle>
-                                        </div>
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => handleDeleteQuestion(q.id!)}
-                                            className="text-red-400 hover:bg-red-900/20 hover:text-red-300"
-                                        >
-                                            <Trash2 className="h-5 w-5" />
-                                        </Button>
-                                    </CardHeader>
-                                    <CardContent className="space-y-8">
-                                        <div className="space-y-2">
-                                            <Label className="rpg-label">試練の問い (問題文)</Label>
-                                            <Textarea
-                                                value={q.text}
-                                                onChange={(e) => handleUpdateQuestion(q.id!, { text: e.target.value })}
-                                                placeholder="例：伝説の剣の名前は何？"
-                                                className="min-h-[100px] bg-black/40 border-amber-900/50 text-white text-lg focus:border-amber-500 transition-colors resize-none"
-                                            />
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                            <div className="space-y-4">
-                                                <Label className="rpg-label">選択肢 (正しいものにチェック)</Label>
-                                                <RadioGroup
-                                                    value={q.correctAnswer.toString()}
-                                                    onValueChange={(val) => handleUpdateQuestion(q.id!, { correctAnswer: parseInt(val) })}
-                                                    className="space-y-3"
-                                                >
-                                                    {q.choices.map((choice, cIdx) => (
-                                                        <div key={cIdx} className="flex items-center gap-3 group/choice">
-                                                            <RadioGroupItem
-                                                                value={cIdx.toString()}
-                                                                id={`q${qIdx}-c${cIdx}`}
-                                                                className="border-amber-500 text-amber-500"
-                                                            />
-                                                            <Input
-                                                                value={choice}
-                                                                onChange={(e) => handleChoiceChange(qIdx, cIdx, e.target.value)}
-                                                                placeholder={`選択肢 ${cIdx + 1}`}
-                                                                className="bg-black/20 border-white/10 group-focus-within/choice:border-amber-500 transition-colors"
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </RadioGroup>
-                                            </div>
-
-                                            <div className="space-y-6">
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <div className="space-y-2">
-                                                        <Label className="rpg-label flex items-center gap-2">
-                                                            <Clock className="h-3 w-3" /> 制限時間 (秒)
-                                                        </Label>
-                                                        <Input
-                                                            type="number"
-                                                            value={q.timeLimit}
-                                                            onChange={(e) => handleUpdateQuestion(q.id!, { timeLimit: parseInt(e.target.value) })}
-                                                            className="bg-black/20 border-white/10"
-                                                        />
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        <Label className="rpg-label flex items-center gap-2">
-                                                            <Trophy className="h-3 w-3" /> 基本配点
-                                                        </Label>
-                                                        <Input
-                                                            type="number"
-                                                            value={q.points}
-                                                            onChange={(e) => handleUpdateQuestion(q.id!, { points: parseInt(e.target.value) })}
-                                                            className="bg-black/20 border-white/10"
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="p-4 rounded-xl bg-amber-900/10 border border-amber-500/20 space-y-3">
-                                                    <p className="rpg-label !mb-0 text-[10px]">魔導士の助言</p>
-                                                    <p className="text-xs text-amber-200/50 leading-relaxed italic">
-                                                        「正しい答えのラジオボタンにチェックを入れるのを忘れるな。さもなくば、誰もその試練を突破できぬだろう。」
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </motion.div>
+                                q={q}
+                                idx={qIdx}
+                                onUpdate={handleUpdateQuestion}
+                                onDelete={handleDeleteQuestion}
+                            />
                         ))}
                     </AnimatePresence>
 
