@@ -201,7 +201,12 @@ export default function GuestLobby() {
                         </div>
                         <p className="text-amber-200/70 text-sm leading-relaxed max-w-md mx-auto italic">
                             間もなくクイズが開始されます。そのままお待ちください。<br />
-                            <span className="text-amber-500 font-bold">※早く答えるほど最大で基本点の50％のスピードボーナスがもらえます！</span>
+                            <span className="mt-4 block font-bold text-amber-500">
+                                早押しバトルの極意：<br />
+                                1. 問題が表示されたら即座に回答を選択してください。<br />
+                                2. 正解すると基本ポイントが入ります。<br />
+                                3. 早く答えるほど、最大で基本点の50％のスピードボーナスが獲得できます！
+                            </span>
                         </p>
                     </div>
 

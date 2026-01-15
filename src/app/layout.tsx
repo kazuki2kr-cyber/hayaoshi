@@ -23,6 +23,8 @@ export const metadata: Metadata = {
   },
 };
 
+import Footer from "@/components/Footer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <Script
           async
@@ -39,7 +41,10 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <AuthProvider>
-          {children}
+          <div className="flex-grow">
+            {children}
+          </div>
+          <Footer />
           <Toaster />
         </AuthProvider>
       </body>

@@ -118,7 +118,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
+    <main className="min-h-screen relative flex flex-col items-center justify-center p-4 overflow-x-hidden">
       {/* Fantasy Background */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center"
@@ -128,8 +128,9 @@ export default function Home() {
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md z-10"
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="w-full max-w-md z-10 mt-20"
       >
         <Card className="fantasy-card border-none bg-black/40 backdrop-blur-xl">
           <CardHeader className="text-center pb-2">
@@ -205,6 +206,81 @@ export default function Home() {
           </CardFooter>
         </Card>
       </motion.div>
+
+      {/* Added Content Sections for AdSense Compliance */}
+      <div className="w-full max-w-4xl z-10 mt-20 space-y-12 mb-20">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="fantasy-card bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 space-y-4"
+          >
+            <h2 className="text-2xl font-black gold-text italic flex items-center gap-3">
+              <Sword className="h-6 w-6 text-amber-500" />
+              遊び方
+            </h2>
+            <ul className="space-y-4 text-amber-100/80 font-medium leading-relaxed">
+              <li className="flex gap-3">
+                <span className="text-amber-500 font-bold">01.</span>
+                <span>「クイズを作成する」ボタンから、自分だけの対戦ルームを立ち上げます。</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-500 font-bold">02.</span>
+                <span>発行された6桁のルームIDを、一緒に遊びたい仲間に共有しましょう。</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-500 font-bold">03.</span>
+                <span>全員が集まったらゲーム開始！画面に表示される問題に素早く答えてください。</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-amber-500 font-bold">04.</span>
+                <span>回答速度に応じてボーナススコアが加算されます。最速の賢者を目指せ！</span>
+              </li>
+            </ul>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="fantasy-card bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 space-y-4"
+          >
+            <h2 className="text-2xl font-black gold-text italic flex items-center gap-3">
+              <Sparkles className="h-6 w-6 text-amber-500" />
+              特徴
+            </h2>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-amber-400 font-bold mb-1">リアルタイム対戦</h3>
+                <p className="text-amber-100/60 text-sm">Firebaseを使用した超高速同期により、仲間と同じ瞬間にクイズに挑めます。</p>
+              </div>
+              <div>
+                <h3 className="text-amber-400 font-bold mb-1">スピードボーナス</h3>
+                <p className="text-amber-100/60 text-sm">ただ正解するだけでなく、0.1秒の差が勝敗を分ける。戦略的な早押しが求められます。</p>
+              </div>
+              <div>
+                <h3 className="text-amber-400 font-bold mb-1">ファンタジーな世界観</h3>
+                <p className="text-amber-100/60 text-sm">魔法と知略の王国をイメージしたUIで、没入感のあるクイズ体験を提供します。</p>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center p-12 bg-gradient-to-r from-amber-900/20 via-black/40 to-amber-900/20 rounded-3xl border border-white/5"
+        >
+          <h2 className="text-3xl font-black gold-text italic mb-6">究極のクイズ体験を</h2>
+          <p className="max-w-2xl mx-auto text-amber-100/70 leading-loose">
+            Fantasy Quizzes Kingdomは、単なるクイズアプリではありません。
+            友人たちと知恵を競い、一瞬の判断力を磨く、まさに知略の戦場です。
+            インストール不要で、今すぐブラウザから冒険を開始できます。
+          </p>
+        </motion.section>
+      </div>
     </main>
   );
 }
