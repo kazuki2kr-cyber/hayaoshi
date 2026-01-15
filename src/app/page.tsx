@@ -253,7 +253,7 @@ export default function Home() {
             <div className="space-y-6">
               <div>
                 <h3 className="text-amber-400 font-bold mb-1">リアルタイム対戦</h3>
-                <p className="text-amber-100/60 text-sm">オンライン高速同期により、仲間と同じ瞬間にクイズに挑めます。</p>
+                <p className="text-amber-100/60 text-sm">オンライン高速同期により、白熱した早押しクイズに挑めます。</p>
               </div>
               <div>
                 <h3 className="text-amber-400 font-bold mb-1">スピードボーナス</h3>
@@ -261,7 +261,7 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-amber-400 font-bold mb-1">ファンタジーな世界観</h3>
-                <p className="text-amber-100/60 text-sm">魔法と知略の王国をイメージしたUIで、没入感のあるクイズ体験を提供します。</p>
+                <p className="text-amber-100/60 text-sm">ファンタジーな世界観をイメージしたUIで、没入感のあるクイズ体験を提供します。</p>
               </div>
             </div>
           </motion.div>
