@@ -11,12 +11,14 @@ import { db } from "@/lib/firebase";
 import { generateRoomId } from "@/lib/utils-game";
 import { Plus, Sparkles, Sword } from "lucide-react";
 import { motion } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
   const { user, loginAnonymously } = useAuth();
   const [roomId, setRoomId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleCreateRoom = async () => {
     setIsLoading(true);
@@ -80,8 +82,13 @@ export default function Home() {
       });
 
       router.push(`/host/${newId}`);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      toast({
+        title: "エラーが発生しました",
+        description: e.message || "クイズの作成に失敗しました。もう一度お試しください。",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -95,8 +102,13 @@ export default function Home() {
         await loginAnonymously();
       }
       router.push(`/room/${roomId}`);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      toast({
+        title: "エラーが発生しました",
+        description: e.message || "ルームへの参加に失敗しました。",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
