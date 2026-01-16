@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Fantasy Quizzes Kingdom",
     description: "魔法と知略の早押しクイズ。リアルタイム対戦で覇を競え。",
-    url: "https://hayaoshi-quiz.vercel.app", // 本番URLが確定していれば差し替えてください
+    url: "https://sparks-station.com",
     siteName: "Fantasy Quizzes Kingdom",
     locale: "ja_JP",
     type: "website",

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://hayaoshi-quiz.vercel.app' // URLを環境に合わせて変更してください
+    const baseUrl = 'https://sparks-station.com'
 
     return [
         {
