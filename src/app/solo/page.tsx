@@ -17,17 +17,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-    Trophy,
-    Timer,
-    Sword,
-    Sparkles,
-    Home,
-    Crown,
-    Loader2,
-    CheckCircle2,
-    XCircle
-} from "lucide-react";
+import { Trophy, Timer, ArrowLeft, Loader2, CheckCircle2, XCircle, Scroll, Home, Sparkles, Sword, Crown } from "lucide-react";
+import AdBanner from "@/components/AdBanner";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
@@ -291,11 +282,15 @@ export default function SoloPage() {
                                             </div>
                                         ))
                                     ) : (
-                                        <p className="text-center text-white/20 py-10 italic text-sm">ランキングデータなし</p>
+                                        <div className="py-20 text-center text-white/20 italic">
+                                            戦績データがありません
+                                        </div>
                                     )}
                                 </div>
                             </Card>
                         </div>
+
+                        <AdBanner adSlot="solo_lobby_bottom" />
 
                         <div className="flex justify-center">
                             <Button variant="ghost" onClick={() => router.push("/")} className="text-white/30 hover:text-amber-500">
@@ -427,6 +422,10 @@ export default function SoloPage() {
                                 >
                                     タイトルに戻る
                                 </Button>
+                            </div>
+
+                            <div className="pt-4">
+                                <AdBanner adSlot="solo_result_bottom" />
                             </div>
                         </Card>
 

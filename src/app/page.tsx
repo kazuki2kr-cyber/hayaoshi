@@ -370,6 +370,8 @@ export default function Home() {
               </motion.div>
             </section>
 
+            <AdBanner adSlot="home_middle" />
+
             <motion.section
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
