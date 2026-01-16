@@ -351,20 +351,20 @@ export default function Home() {
                   <Scroll className="h-6 w-6 text-amber-500" />
                   栄光への挑戦
                 </h2>
-                <ul className="space-y-4 text-amber-100/80 font-medium leading-relaxed">
-                  <li className="flex gap-3">
-                    <span className="text-amber-500 font-bold">・</span>
-                    <span>登録不要。ブラウザから今すぐ冒険を開始。</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-amber-500 font-bold">・</span>
-                    <span>全国の騎士たちとランキングで覇を競う。</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-amber-500 font-bold">・</span>
-                    <span>PC・スマホ、全デバイスで快適に動作。</span>
-                  </li>
-                </ul>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-amber-400 font-bold mb-1">登録不要で即冒険</h3>
+                    <p className="text-amber-100/60 text-sm">面倒な登録は一切不要。ブラウザから今すぐクイズの旅を開始できます。</p>
+                  </div>
+                  <div>
+                    <h3 className="text-amber-400 font-bold mb-1">全国ランキングに挑戦</h3>
+                    <p className="text-amber-100/60 text-sm">スコアアタックモードで全国の騎士たちと競い、伝説の賢者を目指しましょう。</p>
+                  </div>
+                  <div>
+                    <h3 className="text-amber-400 font-bold mb-1">あらゆるデバイスで快適</h3>
+                    <p className="text-amber-100/60 text-sm">PC、スマホ、タブレット。どんな環境でも変わらない最高の体験を提供します。</p>
+                  </div>
+                </div>
               </motion.div>
             </section>
 
