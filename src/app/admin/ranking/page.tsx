@@ -206,7 +206,7 @@ export default function RankingAdmin() {
                                                         variant="ghost"
                                                         size="icon"
                                                         onClick={() => handleDelete(r.id, r.nickname)}
-                                                        className="text-white/10 hover:text-red-500 hover:bg-red-500/10 opacity-0 group-hover:opacity-100 transition-all"
+                                                        className="text-red-400/30 hover:text-red-500 hover:bg-red-500/10 transition-all"
                                                     >
                                                         <Trash2 className="h-4 w-4" />
                                                     </Button>
