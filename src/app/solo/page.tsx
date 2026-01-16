@@ -82,13 +82,12 @@ export default function SoloPage() {
                     setRankings(list);
                 } catch (error: any) {
                     console.error("Error fetching rankings:", error);
-                    if (error.message?.includes("index")) {
-                        toast({
-                            title: "ランキングの表示に失敗しました",
-                            description: "インデックスの作成が必要です。コンソールを確認してください。",
-                            variant: "destructive"
-                        });
-                    }
+                    // Show a toast for ANY error during fetch to help diagnose
+                    toast({
+                        title: "ランキングの取得に失敗しました",
+                        description: error.message || "通信エラーが発生しました。",
+                        variant: "destructive"
+                    });
                 }
             };
             fetchRankings();
@@ -382,8 +381,8 @@ export default function SoloPage() {
                             <h2 className="text-4xl font-black gold-text tracking-widest uppercase">スコア確定</h2>
                         </div>
 
-                        <Card className="fantasy-card border-none bg-black/60 p-10 space-y-8 relative">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-10 py-3 bg-amber-950 border-2 border-amber-500 rounded-full text-amber-500 font-black tracking-[0.2em]">
+                        <Card className="fantasy-card border-none bg-black/60 p-10 pt-16 space-y-8 relative">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-10 py-3 bg-amber-950 border-2 border-amber-500 rounded-full text-amber-500 font-black tracking-[0.2em] z-10 whitespace-nowrap">
                                 YOUR RESULT
                             </div>
 
