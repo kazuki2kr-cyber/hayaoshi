@@ -53,8 +53,8 @@ export function getSortedPostsData(): Post[] {
             return -1;
         }
     });
-});
 }
+
 
 export async function getPostData(slug: string): Promise<Post> {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
