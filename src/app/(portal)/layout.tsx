@@ -20,11 +20,9 @@ export default function PortalLayout({
                     </Link>
 
                     <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-400">
+                        <Link href="/" className="hover:text-emerald-400 transition-colors">Insights</Link>
+                        <Link href="/products" className="hover:text-emerald-400 transition-colors">Products</Link>
                         <Link href="/about" className="hover:text-emerald-400 transition-colors">About</Link>
-                        <Link href="/quiz" className="hover:text-amber-400 transition-colors flex items-center gap-1">
-                            <span>Quiz App</span>
-                            <span className="text-[10px] bg-amber-500/10 text-amber-500 px-1.5 py-0.5 rounded border border-amber-500/20">DEMO</span>
-                        </Link>
                     </nav>
                 </div>
             </header>
