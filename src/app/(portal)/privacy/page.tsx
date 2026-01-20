@@ -2,55 +2,54 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Privacy Policy | Sparks Station',
+    title: 'プライバシーポリシー | Sparks Station',
 };
 
 export default function PrivacyPage() {
     return (
         <div className="max-w-3xl mx-auto space-y-12">
             <header className="space-y-4 border-b border-neutral-800 pb-8">
-                <h1 className="text-3xl md:text-4xl font-bold text-white">Privacy Policy</h1>
-                <p className="text-neutral-400">Last updated: January 20, 2026</p>
+                <h1 className="text-3xl md:text-4xl font-bold text-white">プライバシーポリシー</h1>
+                <p className="text-neutral-400">最終更新日: 2026年1月20日</p>
             </header>
 
             <div className="prose prose-invert prose-emerald max-w-none text-neutral-300">
-                <h2>1. Introduction</h2>
+                <h2>1. はじめに</h2>
                 <p>
-                    At Sparks Station ("we," "our," or "us"), we respect your privacy and are committed to protecting it through our compliance with this policy.
+                    Sparks Station（以下、「当サイト」）は、ユーザーの個人情報の取り扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」）を定めます。
                 </p>
 
-                <h2>2. Data Collection</h2>
+                <h2>2. 個人情報の収集方法</h2>
                 <p>
-                    We do not collect personal information unless you voluntarily provide it (e.g., via contact forms). However, we may use third-party tools that collect non-personal data.
+                    当サイトは、ユーザーがお問い合わせフォームを利用する際に、氏名（ハンドルネーム）、メールアドレス等の個人情報を収集する場合があります。
                 </p>
 
-                <h2>3. Cookies and Web Beacons</h2>
+                <h2>3. 広告の配信について</h2>
                 <p>
-                    Like any other website, Sparks Station uses "cookies". These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
+                    当サイトでは、第三者配信の広告サービス（Googleアドセンス）を利用しています。
+                    このような広告配信事業者は、ユーザーの興味に応じた商品やサービスの広告を表示するため、当サイトや他サイトへのアクセスに関する情報 『Cookie』(氏名、住所、メール アドレス、電話番号は含まれません) を使用することがあります。
+                </p>
+                <p>
+                    またGoogleアドセンスに関して、このプロセスの詳細やこのような情報が広告配信事業者に使用されないようにする方法については、<a href="https://policies.google.com/technologies/ads?hl=ja" className="text-emerald-400 hover:text-emerald-300 underline" target="_blank" rel="noopener noreferrer">Googleのポリシーと規約</a>をご覧ください。
                 </p>
 
-                <h2>4. DoubleClick DART Cookie</h2>
+                <h2>4. アクセス解析ツールについて</h2>
                 <p>
-                    Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to www.website.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads" className="text-emerald-400 hover:text-emerald-300 underline" target="_blank" rel="noopener noreferrer">https://policies.google.com/technologies/ads</a>
+                    当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス」を利用しています。
+                    このGoogleアナリティクスはトラフィックデータの収集のためにCookieを使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。
+                    この機能はCookieを無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。
                 </p>
 
-                <h2>5. Advertising Partners Privacy Policies</h2>
+                <h2>5. 免責事項</h2>
                 <p>
-                    You may consult this list to find the Privacy Policy for each of the advertising partners of Sparks Station.
-                    <br />
-                    Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Sparks Station, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
-                    <br />
-                    Note that Sparks Station has no access to or control over these cookies that are used by third-party advertisers.
+                    当サイトからのリンクやバナーなどで移動したサイトで提供される情報、サービス等について一切の責任を負いません。
+                    また当サイトのコンテンツ・情報について、できる限り正確な情報を掲載するよう努めておりますが、正確性や安全性を保証するものではありません。情報が古くなっていることもございます。
+                    当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。
                 </p>
 
-                <h2>6. Third Party Privacy Policies</h2>
+                <h2>6. お問い合わせ</h2>
                 <p>
-                    Sparks Station's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.
-                </p>
-
-                <h2>7. Contact Us</h2>
-                <p>
-                    If you have any questions about this Privacy Policy, please contact us.
+                    本ポリシーに関するお問い合わせは、当サイトのお問い合わせフォームよりお願いいたします。
                 </p>
             </div>
         </div>

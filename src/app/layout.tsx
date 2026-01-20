@@ -18,21 +18,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  title: "Fantasy Quizzes Kingdom",
-  description: "リアルタイムで競い合う、魔法と知略の早押しクイズ。仲間と共に究極の賢者を目指せ。",
-  keywords: ["クイズ", "早押し", "ファンタジー", "対戦", "マルチプレイヤー", "スコアアタック"],
+  title: {
+    default: "Sparks Station | Micro-SaaS Insights for Engineers",
+    template: "%s | Sparks Station",
+  },
+  description: "海外の売却事例から「稼げるヒント」をエンジニアへ。Micro-SaaSの分析とExit事例を紹介するメディア。",
+  keywords: ["Micro-SaaS", "個人開発", "エンジニア", "副業", "スタートアップ", "SaaS"],
   openGraph: {
-    title: "Fantasy Quizzes Kingdom",
-    description: "魔法と知略の早押しクイズ。リアルタイム対戦で覇を競え。",
+    title: "Sparks Station",
+    description: "海外の売却事例から「稼げるヒント」をエンジニアへ。",
     url: "https://sparks-station.com",
-    siteName: "Fantasy Quizzes Kingdom",
+    siteName: "Sparks Station",
     locale: "ja_JP",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fantasy Quizzes Kingdom",
-    description: "魔法と知略の早押しクイズ。リアルタイム対戦で覇を競え。",
+    title: "Sparks Station",
+    description: "海外の売却事例から「稼げるヒント」をエンジニアへ。",
   },
   other: {
     "google-adsense-account": "ca-pub-3577742758028719",
