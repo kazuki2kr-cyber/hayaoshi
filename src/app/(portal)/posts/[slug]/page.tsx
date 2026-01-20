@@ -1,6 +1,7 @@
 
 import { getPostData, getSortedPostsData } from '@/lib/content';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -91,7 +92,7 @@ export default async function PostPage({ params }: Props) {
                 prose-strong:text-white prose-strong:font-bold
                 prose-code:text-emerald-300 prose-code:bg-emerald-950/40 prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
                 ">
-                <ReactMarkdown>{post.content}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
             </div>
 
             {/* Footer / Navigation */}
