@@ -12,12 +12,12 @@ export default function PortalPage() {
                     Micro-SaaS Trends for Engineers
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white max-w-3xl mx-auto leading-tight">
-                    海外の売却事例から<br className="hidden md:block" />
-                    <span className="text-emerald-400">「稼げるヒント」</span>をエンジニアへ。
+                    海外の開発・売却事例から<br className="hidden md:block" />
+                    <span className="text-emerald-400">「Spark（ひらめき）」</span>をエンジニアへ。
                 </h1>
                 <p className="text-neutral-400 max-w-xl mx-auto text-lg leading-relaxed">
-                    開発力はある。アイデアと売り方がわからない。
-                    <br />そんな個人開発者のために、実際のExit事例とTech Stackを分析して届けます。
+                    次のプロダクトの種火（Spark）は、海の向こうにある。
+                    <br />数十億円で売却されたSaaSの「なぜ」と「どうやって」を、エンジニアの視点で紐解きます。
                 </p>
             </section>
 
