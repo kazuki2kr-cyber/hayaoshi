@@ -55,27 +55,6 @@ export default function ProductsPage() {
                     </div>
                 </Link>
 
-                {/* Coming Soon 1 */}
-                <div className="bg-neutral-900/50 border border-neutral-800/50 rounded-xl p-8 flex flex-col items-center justify-center text-center space-y-4 min-h-[300px]">
-                    <div className="bg-neutral-800 p-4 rounded-full">
-                        <Sparkles className="w-8 h-8 text-neutral-600" />
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-neutral-500">Micro-SaaS Tool A</h3>
-                        <p className="text-sm text-neutral-600 mt-1">Coming Soon</p>
-                    </div>
-                </div>
-
-                {/* Coming Soon 2 */}
-                <div className="bg-neutral-900/50 border border-neutral-800/50 rounded-xl p-8 flex flex-col items-center justify-center text-center space-y-4 min-h-[300px]">
-                    <div className="bg-neutral-800 p-4 rounded-full">
-                        <Construction className="w-8 h-8 text-neutral-600" />
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-bold text-neutral-500">Vertical SaaS B</h3>
-                        <p className="text-sm text-neutral-600 mt-1">Coming Soon</p>
-                    </div>
-                </div>
             </div>
         </div>
     );

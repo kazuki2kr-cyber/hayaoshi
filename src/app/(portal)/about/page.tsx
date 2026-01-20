@@ -80,6 +80,29 @@ export default function AboutPage() {
                     この2つのサイクルを高速で回し、次世代のビジネスと技術の<span className="text-amber-400 font-bold">種火（Sparks）</span>をここから生み出していきます。
                 </p>
             </section>
+
+            {/* Operator Info & Disclaimer */}
+            <section className="border-t border-neutral-800 pt-12 text-sm text-neutral-500 space-y-8">
+                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div className="space-y-4">
+                        <h3 className="font-bold text-neutral-300 uppercase tracking-wider">運営者情報</h3>
+                        <dl className="grid grid-cols-[100px_1fr] gap-y-2">
+                            <dt>名称</dt>
+                            <dd>Sparks Station 運営事務局</dd>
+                            <dt>URL</dt>
+                            <dd>https://sparks-station.com</dd>
+                            <dt>お問い合わせ</dt>
+                            <dd>Contactページよりお願いいたします</dd>
+                        </dl>
+                    </div>
+                    <div className="space-y-4">
+                        <h3 className="font-bold text-neutral-300 uppercase tracking-wider">免責事項</h3>
+                        <p className="leading-relaxed">
+                            当サイトのコンテンツ・情報について、可能な限り正確な情報を掲載するよう努めておりますが、正確性や安全性を保証するものではありません。当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
