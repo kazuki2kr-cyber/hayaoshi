@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, Timestamp, doc, updateDoc, increment, setDoc } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, Timestamp, doc, updateDoc, increment, setDoc, deleteDoc } from 'firebase/firestore';
 import { useAuth } from '@/lib/auth-context';
 import { Send, User as UserIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -77,6 +77,23 @@ export default function CommentSection({ slug }: { slug: string }) {
         }
     };
 
+    const handleDelete = async (commentId: string) => {
+        if (!confirm('コメントを削除してもよろしいですか？')) return;
+
+        try {
+            // Delete the comment document
+            await deleteDoc(doc(db, 'posts_stats', slug, 'comments', commentId));
+
+            // Decrement comment count in parent doc
+            const parentDocRef = doc(db, 'posts_stats', slug);
+            await updateDoc(parentDocRef, {
+                commentCount: increment(-1)
+            });
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
+    };
+
     return (
         <div className="space-y-8">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
@@ -147,7 +164,7 @@ export default function CommentSection({ slug }: { slug: string }) {
                     <p className="text-center text-neutral-500 py-12">まだコメントはありません。最初のコメントを投稿しましょう！</p>
                 ) : (
                     comments.map(comment => (
-                        <div key={comment.id} className="flex gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                        <div key={comment.id} className="flex gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500 group">
                             <div className="flex-shrink-0">
                                 {comment.userAvatar ? (
                                     <Image
@@ -164,11 +181,22 @@ export default function CommentSection({ slug }: { slug: string }) {
                                 )}
                             </div>
                             <div className="flex-grow space-y-1">
-                                <div className="flex items-center gap-2">
-                                    <span className="font-bold text-neutral-200 text-sm">{comment.userName}</span>
-                                    <span className="text-xs text-neutral-500">
-                                        {comment.createdAt?.toDate().toLocaleDateString('ja-JP')}
-                                    </span>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-bold text-neutral-200 text-sm">{comment.userName}</span>
+                                        <span className="text-xs text-neutral-500">
+                                            {comment.createdAt?.toDate().toLocaleDateString('ja-JP')}
+                                        </span>
+                                    </div>
+                                    {user && user.uid === comment.userId && (
+                                        <button
+                                            onClick={() => handleDelete(comment.id)}
+                                            className="text-neutral-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all text-xs"
+                                            title="削除する"
+                                        >
+                                            削除
+                                        </button>
+                                    )}
                                 </div>
                                 <p className="text-neutral-300 text-sm leading-relaxed whitespace-pre-wrap">
                                     {comment.text}
