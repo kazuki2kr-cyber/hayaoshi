@@ -25,7 +25,7 @@ export default function PostStats({ slug, theme }: { slug: string, theme: any })
     }, [slug]);
 
     return (
-        <div className={`flex items-center gap-4 text-xs font-mono mt-auto pt-4 border-t border-neutral-700/50 w-full ${theme.primary}`}>
+        <div className={`flex items-center gap-4 text-xs font-mono ml-auto ${theme.primary}`}>
             <div className="flex items-center gap-1.5" title="参考になった">
                 <ThumbsUp size={14} className="opacity-70" />
                 <span>{stats.helpful}</span>

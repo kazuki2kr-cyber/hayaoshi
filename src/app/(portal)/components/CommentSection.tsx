@@ -132,7 +132,7 @@ export default function CommentSection({ slug }: { slug: string }) {
                         <p className="text-neutral-400">コメントを投稿するにはログインが必要です</p>
                         <button
                             onClick={() => loginWithGoogle()}
-                            className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-100 hover:bg-white text-neutral-900 rounded-full font-bold transition-colors"
+                            className="inline-flex items-center gap-2 px-6 py-2.5 bg-neutral-100 hover:bg-white text-neutral-900 rounded-full font-bold transition-colors cursor-pointer"
                         >
                             <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4" />
                             Sign in with Google

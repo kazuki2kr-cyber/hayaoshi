@@ -44,9 +44,15 @@ export default function PostCard({ post }: { post: Post }) {
                         {post.metadata.summary}
                     </p>
 
+                    <div className="pt-4 flex items-center justify-between text-xs font-mono border-t border-neutral-700/50 mt-5 w-full">
+                        <div className="flex flex-col gap-1">
+                            {post.metadata.mrr && <div className="text-neutral-500">MRR: <span className="text-neutral-300 font-bold">{post.metadata.mrr}</span></div>}
+                            {post.metadata.exit_price && <div className="text-neutral-500">Sold: <span className="text-neutral-300 font-bold">{post.metadata.exit_price}</span></div>}
+                        </div>
 
-                    {/* Stats Footer (Integrated into card) */}
-                    <PostStats slug={post.slug} theme={theme} />
+                        {/* Stats Footer (Integrated into card) */}
+                        <PostStats slug={post.slug} theme={theme} />
+                    </div>
                 </div>
             </article>
         </Link>
