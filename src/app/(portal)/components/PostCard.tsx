@@ -37,8 +37,8 @@ export default function PostCard({ post }: { post: Post }) {
                     <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
 
                     {/* Tag Overlay */}
-                    <div className="relative z-10 text-white font-bold text-3xl md:text-4xl tracking-tighter opacity-90 drop-shadow-md transform group-hover:scale-105 transition-transform duration-500">
-                        {mainTag}
+                    <div className="relative z-10 text-white font-bold text-3xl md:text-4xl tracking-tighter opacity-90 drop-shadow-md transform group-hover:scale-105 transition-transform duration-500 text-center px-4 leading-tight">
+                        {mainTag.replace(/([A-Z])/g, ' $1').trim()}
                     </div>
 
                     {/* Decorative shine effect */}
