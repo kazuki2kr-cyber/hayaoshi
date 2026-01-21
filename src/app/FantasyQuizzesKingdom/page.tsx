@@ -14,7 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import AdBanner from "@/components/AdBanner";
 
-type ViewMode = "TOP" | "SOLO" | "MULTI";
+type ViewMode = "TOP" | "MULTI";
 
 export default function Home() {
   const { user, loginAnonymously } = useAuth();
@@ -181,7 +181,7 @@ export default function Home() {
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setViewMode("SOLO")}
+                        onClick={() => router.push("/FantasyQuizzesKingdom/solo")}
                         className="relative p-6 rounded-2xl bg-gradient-to-r from-amber-600/20 to-amber-900/40 border border-amber-500/30 group overflow-hidden text-left"
                       >
                         <div className="flex items-center gap-4">
@@ -210,26 +210,6 @@ export default function Home() {
                         </div>
                       </motion.button>
                     </div>
-                  </div>
-                )}
-
-                {/* SOLO MODE CONTENT */}
-                {viewMode === "SOLO" && (
-                  <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <Button
-                      variant="ghost"
-                      onClick={() => setViewMode("TOP")}
-                      className="w-full text-white/50 hover:text-white mb-2"
-                    >
-                      <ArrowLeft className="mr-2 h-4 w-4" /> 戻る
-                    </Button>
-
-                    <Button
-                      onClick={() => router.push("/FantasyQuizzesKingdom/solo")}
-                      className="w-full h-16 text-lg font-black fantasy-button text-amber-100 uppercase tracking-widest"
-                    >
-                      冒険に出る (Start)
-                    </Button>
                   </div>
                 )}
 
@@ -315,49 +295,6 @@ export default function Home() {
                   インストール不要で、今すぐブラウザから開始できます。
                 </p>
               </motion.section>
-            )}
-
-            {/* SOLO VIEW INFO */}
-            {viewMode === "SOLO" && (
-              <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="fantasy-card bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 space-y-4"
-                >
-                  <h2 className="text-2xl font-black gold-text italic flex items-center gap-3">
-                    <Crown className="h-6 w-6 text-amber-500" />
-                    スコアアタックモードの遊び方
-                  </h2>
-                  <ul className="space-y-4 text-amber-100/80 font-medium leading-relaxed">
-                    <li className="flex gap-3"><span className="text-amber-500 font-bold">01.</span><span>「冒険に出る」を選択して開始。</span></li>
-                    <li className="flex gap-3"><span className="text-amber-500 font-bold">02.</span><span>厳選された一般常識問題が全10問出題。</span></li>
-                    <li className="flex gap-3"><span className="text-amber-500 font-bold">03.</span><span>各問題の制限時間は10秒。</span></li>
-                    <li className="flex gap-3"><span className="text-amber-500 font-bold">04.</span><span>最終スコアは全国ランキングに登録。</span></li>
-                  </ul>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="fantasy-card bg-black/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 space-y-4"
-                >
-                  <h2 className="text-2xl font-black gold-text italic flex items-center gap-3">
-                    <Scroll className="h-6 w-6 text-amber-500" />
-                    栄光への挑戦
-                  </h2>
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-amber-400 font-bold mb-1">登録不要で即冒険</h3>
-                      <p className="text-amber-100/60 text-sm">面倒な登録は一切不要。今すぐ開始できます。</p>
-                    </div>
-                    <div>
-                      <h3 className="text-amber-400 font-bold mb-1">全国ランキングに挑戦</h3>
-                      <p className="text-amber-100/60 text-sm">全国の騎士たちと競い、伝説の賢者を目指しましょう。</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </section>
             )}
 
             {/* MULTI VIEW INFO */}
