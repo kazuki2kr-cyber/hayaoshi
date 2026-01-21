@@ -11,14 +11,14 @@ export default function PortalPage() {
                 <div className="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-medium border border-emerald-500/20 mb-4">
                     Micro-SaaS Trends for Engineers
                 </div>
-                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white max-w-3xl mx-auto leading-tight">
-                    海外の開発・売却事例から<br className="hidden md:block" />
-                    <span className="text-emerald-400">「Sparks（種火）」</span>を。
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+                    最新の「開発事例」と<br className="hidden md:block" />
+                    先進的な<span className="text-emerald-400">「思想」</span>を<span className="text-emerald-400">「プロダクト」</span>へ。
                 </h1>
-                <p className="text-neutral-400 max-w-xl mx-auto text-lg leading-relaxed">
-                    次のプロダクトの種火は、海の向こうに。
-                    <br />高額で売却されたSaaSの
-                    <br />「なぜ」と「どうやって」を紐解く。
+                <p className="text-neutral-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                    海の向こうの開発事例と、世界をアップデートする概念。<br />
+                    2つの知見を種火（Sparks）に変えて、<br />
+                    プロダクトを創り出す。
                 </p>
             </section>
 

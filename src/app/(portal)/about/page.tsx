@@ -13,11 +13,13 @@ export default function AboutPage() {
             {/* Hero Section */}
             <section className="text-center space-y-6 py-12">
                 <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-                    <span className="text-emerald-400">Sparks Station</span><br />
-                    知見と実装の交差点
+                    <span className="text-emerald-400">Curiosity & Creation</span><br />
+                    知見と思想を、実装する。
                 </h1>
-                <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-                    Sparks Stationは、世界の最先端SaaSビジネスの成功事例を解剖し、<br className="hidden md:inline" />その知見を自らのプロダクト開発へと昇華させる<br className="hidden md:inline" /><span className="text-white font-bold">「SaaS Analysis & Studio」</span>です。
+                <p className="text-lg md:text-xl text-neutral-300 max-w-3xl mx-auto leading-relaxed">
+                    Sparks Stationは、世界の「開発事例」と「先進思想」をインストールし、<br className="hidden md:inline" />
+                    自らのプロダクトとして形にするための<br className="hidden md:inline" />
+                    <span className="text-white font-bold">「SaaS Analysis & Studio」</span>です。
                 </p>
             </section>
 
@@ -32,12 +34,13 @@ export default function AboutPage() {
 
                 <div className="space-y-6 text-neutral-300 leading-relaxed text-lg">
                     <p>
-                        世界中で日々生まれる革新的なSaaSプロダクト。<br />
-                        私たちは、それらが「なぜ成功したのか（Why）」「どのように作られたのか（How）」を、技術スタック、収益モデル、売却規模といった定量・定性の両面から徹底的に分析します。
+                        「なぜ、そのサービスは成功したのか？（Case Studies）」<br />
+                        「これからの時代、世界はどう変わるのか？（Advanced Thoughts）」
                     </p>
                     <p>
-                        しかし、私たちは単なる情報発信者（メディア）ではありません。<br />
-                        得られたグローバルな知見をただの知識で終わらせず、実際に手を動かし、コードを書き、自らも市場にプロダクトを問いかける<span className="text-white font-bold">「実践者（ビルダー）」</span>であり続けます。
+                        この2つの問いは、プロダクト開発における車の両輪です。<br />
+                        海の向こうにある成功のロジックと、シンギュラリティを見据えた未来への視座。<br />
+                        私たちはこれらを収集・分析するだけでなく、実際の<span className="text-white font-bold">「開発（Build）」</span>を通じて、次世代のスタンダードとなるプロダクトを創出します。
                     </p>
                 </div>
             </section>
@@ -46,29 +49,47 @@ export default function AboutPage() {
             <section className="space-y-8">
                 <h2 className="text-2xl font-bold text-white text-center">What we do</h2>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                    {/* Card 1 */}
-                    <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-xl hover:border-emerald-500/50 transition-colors group">
-                        <div className="bg-emerald-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 transition-colors">
+                <div className="grid gap-6">
+                    {/* Card 1: Global Case Studies */}
+                    <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-xl hover:border-emerald-500/50 transition-colors group flex flex-col md:flex-row gap-6 items-start">
+                        <div className="bg-emerald-500/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-500/20 transition-colors">
                             <Database className="w-6 h-6 text-emerald-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3">Global SaaS Analysis</h3>
-                        <p className="text-neutral-400 leading-relaxed">
-                            海外の成功事例、技術選定、Exit戦略のデータベース化。
-                            定量的なデータに基づき、成功の法則を導き出します。
-                        </p>
+                        <div className="space-y-3">
+                            <h3 className="text-xl font-bold text-white">Global Case Studies <span className="text-emerald-500 text-sm font-normal ml-2">/ 事例</span></h3>
+                            <p className="text-neutral-400 leading-relaxed">
+                                海外で急成長・売却されたSaaS/Micro-SaaSの事例研究。<br />
+                                「どのような課題を、どう技術で解決し、どう収益化したか」を紐解く、実践的なデータベース。
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Card 2 */}
-                    <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-xl hover:border-emerald-500/50 transition-colors group">
-                        <div className="bg-emerald-500/10 w-12 h-12 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 transition-colors">
-                            <Code2 className="w-6 h-6 text-emerald-400" />
+                    {/* Card 2: Advanced Thoughts */}
+                    <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-xl hover:border-emerald-500/50 transition-colors group flex flex-col md:flex-row gap-6 items-start">
+                        <div className="bg-purple-500/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-purple-500/20 transition-colors">
+                            <Lightbulb className="w-6 h-6 text-purple-400" />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3">Product Development</h3>
-                        <p className="text-neutral-400 leading-relaxed">
-                            最新のトレンドと技術を反映した自社プロダクトの開発・運営。
-                            分析で得たインサイトを、実際のプロダクトに落とし込みます。
-                        </p>
+                        <div className="space-y-3">
+                            <h3 className="text-xl font-bold text-white">Advanced Thoughts <span className="text-purple-400 text-sm font-normal ml-2">/ 思想</span></h3>
+                            <p className="text-neutral-400 leading-relaxed">
+                                テクノロジーと社会の未来を定義する、先進的な概念の探求。<br />
+                                既存の枠組みを超え、新しいナラティブや価値観をプロダクトに宿すための思考実験。
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Card 3: Product Studio */}
+                    <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-xl hover:border-emerald-500/50 transition-colors group flex flex-col md:flex-row gap-6 items-start">
+                        <div className="bg-amber-500/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500/20 transition-colors">
+                            <Code2 className="w-6 h-6 text-amber-400" />
+                        </div>
+                        <div className="space-y-3">
+                            <h3 className="text-xl font-bold text-white">Product Studio <span className="text-amber-400 text-sm font-normal ml-2">/ 創造</span></h3>
+                            <p className="text-neutral-400 leading-relaxed">
+                                得られた知見と思想を「種火」として、実際に自社プロダクトを開発（Build）。<br />
+                                実験と実装のプロセスを公開し、理論を現実に変える場所。
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -76,8 +97,8 @@ export default function AboutPage() {
             {/* Closing */}
             <section className="text-center py-12 border-t border-neutral-800">
                 <p className="text-lg text-neutral-300 leading-relaxed max-w-3xl mx-auto">
-                    理論（Analysis）と実践（Development）。<br />
-                    この2つのサイクルを高速で回し、次世代のビジネスと技術の<span className="text-amber-400 font-bold">種火（Sparks）</span>をここから生み出していきます。
+                    学び（Input）と創造（Output）のサイクルを回し、<br />
+                    次世代のビジネスと技術の<span className="text-amber-400 font-bold">種火（Sparks）</span>をここから生み出していきます。
                 </p>
             </section>
 
