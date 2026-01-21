@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { db } from '@/lib/firebase';
+import { db, auth } from '@/lib/firebase';
 import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, Timestamp, doc, updateDoc, increment, setDoc, deleteDoc } from 'firebase/firestore';
 import { useAuth } from '@/lib/auth-context';
 import { Send, User as UserIcon } from 'lucide-react';
@@ -89,8 +89,9 @@ export default function CommentSection({ slug }: { slug: string }) {
             await updateDoc(parentDocRef, {
                 commentCount: increment(-1)
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error deleting comment:", error);
+            alert(`削除に失敗しました: ${error.message}`);
         }
     };
 
@@ -106,44 +107,61 @@ export default function CommentSection({ slug }: { slug: string }) {
             {/* Comment Form */}
             <div className="bg-neutral-900/50 p-6 rounded-xl border border-neutral-800">
                 {user ? (
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="flex gap-4">
-                            <div className="flex-shrink-0">
-                                {user.photoURL ? (
-                                    <Image
-                                        src={user.photoURL}
-                                        alt={user.displayName || "User"}
-                                        width={40}
-                                        height={40}
-                                        className="rounded-full"
-                                    />
-                                ) : (
-                                    <div className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center">
-                                        <UserIcon size={20} className="text-neutral-500" />
-                                    </div>
-                                )}
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between mb-4 pb-4 border-b border-neutral-800">
+                            <div className="flex items-center gap-2">
+                                <div className="text-sm text-neutral-400">
+                                    Logged in as: <span className="text-neutral-200 font-bold">{user.displayName || 'Anonymous'}</span>
+                                    {user.email && <span className="text-neutral-500 text-xs ml-2">({user.email})</span>}
+                                </div>
                             </div>
-                            <div className="flex-grow">
-                                <textarea
-                                    value={newComment}
-                                    onChange={(e) => setNewComment(e.target.value)}
-                                    placeholder="記事の感想や議論を投稿..."
-                                    className="w-full bg-black/20 border border-neutral-700 rounded-lg p-3 text-neutral-200 focus:outline-none focus:border-emerald-500/50 transition-colors h-24 resize-none"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="flex justify-end">
                             <button
-                                type="submit"
-                                disabled={submitting || !newComment.trim()}
-                                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                onClick={() => auth.signOut()}
+                                className="text-xs text-neutral-500 hover:text-white transition-colors underline"
                             >
-                                <Send size={16} />
-                                {submitting ? 'Sending...' : 'Post Comment'}
+                                Sign out
                             </button>
                         </div>
-                    </form>
+
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0">
+                                    {user.photoURL ? (
+                                        <Image
+                                            src={user.photoURL}
+                                            alt={user.displayName || "User"}
+                                            width={40}
+                                            height={40}
+                                            className="rounded-full"
+                                        />
+                                    ) : (
+                                        <div className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center">
+                                            <UserIcon size={20} className="text-neutral-500" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex-grow">
+                                    <textarea
+                                        value={newComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        placeholder="記事の感想や議論を投稿..."
+                                        className="w-full bg-black/20 border border-neutral-700 rounded-lg p-3 text-neutral-200 focus:outline-none focus:border-emerald-500/50 transition-colors h-24 resize-none"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex justify-end">
+                                <button
+                                    type="submit"
+                                    disabled={submitting || !newComment.trim()}
+                                    className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                                >
+                                    <Send size={16} />
+                                    {submitting ? 'Sending...' : 'Post Comment'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 ) : (
                     <div className="text-center py-6 space-y-4">
                         <p className="text-neutral-400">コメントを投稿するにはログインが必要です</p>
@@ -191,7 +209,7 @@ export default function CommentSection({ slug }: { slug: string }) {
                                     {user && user.uid === comment.userId && (
                                         <button
                                             onClick={() => handleDelete(comment.id)}
-                                            className="text-neutral-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all text-xs"
+                                            className="text-neutral-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all text-xs cursor-pointer"
                                             title="削除する"
                                         >
                                             削除
