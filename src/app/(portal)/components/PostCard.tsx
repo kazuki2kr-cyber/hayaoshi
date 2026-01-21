@@ -1,44 +1,21 @@
-
 import Link from 'next/link';
 import { Post } from '@/lib/content';
-
-// Pre-defined fancy gradients
-const GRADIENTS = [
-    'from-pink-500 via-red-500 to-yellow-500',
-    'from-indigo-500 via-purple-500 to-pink-500',
-    'from-green-400 via-emerald-500 to-teal-500',
-    'from-blue-400 via-cyan-500 to-teal-400',
-    'from-orange-400 via-amber-500 to-yellow-400',
-    'from-rose-400 via-fuchsia-500 to-indigo-500',
-];
-
-// Function to pick a gradient based on the tag string
-function getGradient(tag: string) {
-    let hash = 0;
-    for (let i = 0; i < tag.length; i++) {
-        hash = tag.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % GRADIENTS.length;
-    return GRADIENTS[index];
-}
-
 import { getThemeForTag } from '@/lib/theme';
 
 export default function PostCard({ post }: { post: Post }) {
     const mainTag = post.metadata.tags[0] || 'Tech';
-    const gradient = getGradient(mainTag);
     const theme = getThemeForTag(mainTag);
 
     return (
         <Link href={`/posts/${post.slug}`} className="block group h-full">
             <article className={`bg-neutral-800/50 border border-neutral-800 rounded-2xl overflow-hidden transition-all duration-300 h-full flex flex-col shadow-lg hover:-translate-y-1 ${theme.hoverBorder} ${theme.hoverShadow}`}>
                 {/* Visual Thumbnail */}
-                <div className={`aspect-video relative overflow-hidden flex items-center justify-center bg-gradient-to-br ${gradient}`}>
+                <div className={`aspect-video relative overflow-hidden flex items-center justify-center bg-gradient-to-br ${theme.gradient}`}>
                     <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]"></div>
 
                     {/* Tag Overlay */}
                     <div className="relative z-10 text-white font-bold text-3xl md:text-4xl tracking-tighter opacity-90 drop-shadow-md transform group-hover:scale-105 transition-transform duration-500 text-center px-4 leading-tight">
-                        {mainTag.replace(/([A-Z])/g, ' $1').trim()}
+                        {mainTag.replace(/([a-z])([A-Z])/g, '$1 $2').trim()}
                     </div>
 
                     {/* Decorative shine effect */}

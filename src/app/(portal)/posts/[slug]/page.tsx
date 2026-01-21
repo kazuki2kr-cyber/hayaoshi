@@ -86,14 +86,15 @@ export default async function PostPage({ params }: Props) {
             {/* Content using standard Prose styles but customized for dark mode */}
             <div className={`prose prose-invert ${theme.prose} max-w-none 
                 prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-neutral-100
-                prose-h2:text-3xl prose-h2:mt-16 prose-h2:mb-8 prose-h2:pb-4 prose-h2:border-b prose-h2:border-neutral-800
-                ${theme.heading} prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-6
-                prose-p:text-neutral-300 prose-p:leading-9 prose-p:text-lg prose-p:mb-8 prose-p:tracking-wide
-                prose-li:text-neutral-300 prose-li:leading-8 prose-li:my-2 prose-li:tracking-wide
-                prose-ul:my-8 prose-ul:list-disc prose-ul:pl-6
-                prose-hr:my-20 prose-hr:border-neutral-800
+                prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-neutral-800
+                ${theme.heading} prose-h3:text-xl md:prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
+                prose-p:text-neutral-300 prose-p:leading-7 prose-p:text-base md:prose-p:text-lg prose-p:mb-5 prose-p:tracking-normal
+                prose-li:text-neutral-300 prose-li:leading-7 prose-li:my-1
+                prose-ul:my-5 prose-ul:list-disc prose-ul:pl-5
+                prose-hr:my-12 prose-hr:border-neutral-800
                 prose-strong:text-white prose-strong:font-bold
-                prose-code:${theme.codeText} prose-code:${theme.codeBg} prose-code:px-2 prose-code:py-1 prose-code:rounded-md prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+                prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8 prose-img:border prose-img:border-neutral-700/50
+                prose-code:${theme.codeText} prose-code:${theme.codeBg} prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
                 `}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
             </div>

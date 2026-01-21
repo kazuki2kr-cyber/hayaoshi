@@ -11,6 +11,7 @@ export type Theme = {
     codeBg: string;
     metricLabel: string; // For the metrics card
     metricValue: string;
+    gradient: string; // Background gradient for the card
 };
 
 export const THEMES: Record<string, Theme> = {
@@ -27,6 +28,7 @@ export const THEMES: Record<string, Theme> = {
         codeBg: 'bg-emerald-950/40',
         metricLabel: 'text-emerald-400',
         metricValue: 'text-emerald-400',
+        gradient: 'from-emerald-600 via-teal-600 to-green-600',
     },
     purple: {
         primary: 'text-purple-400',
@@ -41,15 +43,38 @@ export const THEMES: Record<string, Theme> = {
         codeBg: 'bg-purple-950/40',
         metricLabel: 'text-purple-400',
         metricValue: 'text-purple-400',
+        gradient: 'from-purple-600 via-indigo-600 to-violet-600',
+    },
+    blue: {
+        primary: 'text-cyan-400',
+        bg: 'bg-cyan-500/10',
+        border: 'border-cyan-500/20',
+        hoverBorder: 'hover:border-cyan-500/50',
+        hoverShadow: 'hover:shadow-cyan-500/10',
+        groupHoverText: 'group-hover:text-cyan-400',
+        prose: 'prose-cyan',
+        heading: 'prose-h3:text-cyan-400',
+        codeText: 'text-cyan-300',
+        codeBg: 'bg-cyan-950/40',
+        metricLabel: 'text-cyan-400',
+        metricValue: 'text-cyan-400',
+        gradient: 'from-blue-600 via-cyan-600 to-sky-600',
     },
 };
 
 export function getThemeForTag(tag: string): Theme {
     const lowerTag = tag.toLowerCase();
+
     // Concept / Thought related tags trigger Purple theme
     if (['narrativeengineering', 'thought', 'concept', 'singularity', 'philosophy'].includes(lowerTag)) {
         return THEMES.purple;
     }
-    // Default to Emerald
+
+    // AI / Tech related tags trigger Blue theme
+    if (['ai agent', 'ai', 'llm', 'machine learning', 'tech', 'agent'].some(t => lowerTag.includes(t))) {
+        return THEMES.blue;
+    }
+
+    // Default to Emerald (SaaS, Business, etc.)
     return THEMES.emerald;
 }
