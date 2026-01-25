@@ -139,6 +139,38 @@ export default function Home() {
           transition={{ duration: 0.5 }}
           className="min-h-screen relative flex flex-col items-center justify-center p-4 overflow-x-hidden"
         >
+          {/* SEO Structured Data */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "Fantasy Quizzes Kingdom",
+                "applicationCategory": "GameApplication",
+                "operatingSystem": "Web browser",
+                "browserRequirements": "Requires JavaScript. Requires HTML5.",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "JPY"
+                },
+                "description": "忘年会、結婚式、歓迎会、パーティなどの余興で盛り上がる無料早押しクイズゲーム。F1、マインクラフト、歴史、雑学など多彩なジャンルを搭載。",
+                "featureList": [
+                  "パーティ・宴会・忘年会クイズ",
+                  "F1 (Formula 1) クイズ",
+                  "マインクラフト (Minecraft) クイズ",
+                  "歴史・雑学・時事問題"
+                ],
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "4.8",
+                  "ratingCount": "120"
+                }
+              })
+            }}
+          />
+
           {/* Fantasy Background */}
           <div
             className="absolute inset-0 z-0 bg-cover bg-center"

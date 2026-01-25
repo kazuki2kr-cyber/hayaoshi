@@ -70,7 +70,7 @@ export default function PrivacyPolicy() {
 
                 <div className="flex justify-center">
                     <Button
-                        onClick={() => router.push("/")}
+                        onClick={() => router.push("/FantasyQuizzesKingdom")}
                         className="fantasy-button px-10 h-14"
                     >
                         <Home className="mr-2 h-5 w-5" /> ホームに戻る

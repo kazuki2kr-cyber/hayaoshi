@@ -52,7 +52,7 @@ export default function HostResults() {
     const handleDeleteRoom = async () => {
         if (confirm("ルームを削除しますか？この操作は取り消せません。")) {
             await deleteDoc(doc(db, "rooms", roomId));
-            router.push("/");
+            router.push("/FantasyQuizzesKingdom");
         }
     };
 
@@ -82,7 +82,7 @@ export default function HostResults() {
                             <RotateCcw className="mr-2 h-5 w-5" />
                             もう一度遊ぶ
                         </Button>
-                        <Button onClick={() => router.push("/")} className="fantasy-button h-14 px-10 text-lg text-amber-100">
+                        <Button onClick={() => router.push("/FantasyQuizzesKingdom")} className="fantasy-button h-14 px-10 text-lg text-amber-100">
                             <Home className="mr-2 h-5 w-5" />
                             ホームに戻る
                         </Button>

@@ -142,7 +142,7 @@ export default function GuestResults() {
                     <div className="max-w-md w-full">
                         <AdBanner adSlot="results_bottom" />
                     </div>
-                    <Button onClick={() => router.push("/")} className="fantasy-button h-16 px-16 text-xl group text-amber-100">
+                    <Button onClick={() => router.push("/FantasyQuizzesKingdom")} className="fantasy-button h-16 px-16 text-xl group text-amber-100">
                         <Home className="mr-3 h-6 w-6" /> ホームへ戻る
                     </Button>
                     <p className="text-white/20 text-[10px] font-black tracking-[0.6em] uppercase flex items-center gap-4">

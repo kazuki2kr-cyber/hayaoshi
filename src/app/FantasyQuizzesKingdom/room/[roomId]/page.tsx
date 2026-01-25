@@ -100,7 +100,7 @@ export default function GuestLobby() {
                 <Card className="fantasy-card border-none bg-black/40 text-center p-12">
                     <h1 className="text-3xl font-black gold-text mb-4">ルームが見つかりません</h1>
                     <p className="text-amber-200/70 mb-8 font-bold">指定された参加コードのルームは見つかりませんでした。</p>
-                    <Button onClick={() => router.push("/")} className="fantasy-button px-10">ホームに戻る</Button>
+                    <Button onClick={() => router.push("/FantasyQuizzesKingdom")} className="fantasy-button px-10">ホームに戻る</Button>
                 </Card>
             </div>
         );
@@ -241,7 +241,7 @@ export default function GuestLobby() {
                 <div className="flex justify-center pb-8">
                     <Button
                         variant="ghost"
-                        onClick={() => router.push("/")}
+                        onClick={() => router.push("/FantasyQuizzesKingdom")}
                         className="text-amber-500/60 hover:text-amber-400 hover:bg-amber-950/30 text-xs font-bold tracking-widest uppercase transition-colors"
                     >
                         <Home className="mr-2 h-4 w-4" /> ホームに戻る

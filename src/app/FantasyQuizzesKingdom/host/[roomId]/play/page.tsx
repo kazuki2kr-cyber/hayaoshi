@@ -36,7 +36,7 @@ export default function HostPlay() {
             if (snapshot.exists()) {
                 const data = snapshot.data();
                 if (data.hostId !== user.uid) {
-                    router.push("/");
+                    router.push("/FantasyQuizzesKingdom");
                     return;
                 }
                 setRoom(data);

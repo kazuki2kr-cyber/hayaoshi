@@ -7,10 +7,14 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "Fantasy Quizzes Kingdom | リアルタイムクイズバトル",
-    description: "ファンタジーの世界で知識を武器に戦おう。ソロモードでランキングに挑戦するか、マルチモードで友達と対戦するか。インストール不要の無料Webクイズゲーム。",
+    description: "忘年会、結婚式、歓迎会などの余興で盛り上がる！インストール不要の無料早押しクイズゲーム。F1やマインクラフト、雑学、時事問題など多彩なジャンルで、幹事さんも安心のクイズ大会ツール。",
+    keywords: [
+        "クイズ", "早押し", "無料", "アプリ", "忘年会", "結婚式", "余興", "歓迎会", "パーティ", "幹事",
+        "雑学", "F1", "Formula 1", "マインクラフト", "Minecraft", "マイクラ", "クイズ大会", "時事問題"
+    ],
     openGraph: {
         title: "Fantasy Quizzes Kingdom | リアルタイムクイズバトル",
-        description: "知識と速さで運命を切り拓け。最大同時対戦可能なRPG風クイズゲーム。",
+        description: "知識と速さで運命を切り拓け。忘年会や結婚式の余興に最適な、最大同時対戦可能なRPG風クイズゲーム。",
         images: ["/key-visual.png"],
     },
     alternates: {

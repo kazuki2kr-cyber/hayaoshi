@@ -295,7 +295,7 @@ export default function GuestPlay() {
             <div className="relative z-10 flex justify-center pb-8 mt-4">
                 <Button
                     variant="ghost"
-                    onClick={() => router.push("/")}
+                    onClick={() => router.push("/FantasyQuizzesKingdom")}
                     className="text-amber-500/60 hover:text-amber-400 hover:bg-amber-950/30 text-xs font-bold tracking-widest uppercase transition-colors"
                 >
                     <Home className="mr-2 h-4 w-4" /> ホームに戻る

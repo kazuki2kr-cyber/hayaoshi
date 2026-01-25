@@ -151,7 +151,7 @@ export default function ContactPage() {
                                         </p>
                                     </div>
                                     <Button
-                                        onClick={() => router.push("/")}
+                                        onClick={() => router.push("/FantasyQuizzesKingdom")}
                                         variant="outline"
                                         className="border-amber-500/50 text-amber-500 hover:bg-amber-500/10"
                                     >
@@ -166,7 +166,7 @@ export default function ContactPage() {
                 <div className="mt-8 flex justify-center">
                     <Button
                         variant="ghost"
-                        onClick={() => router.push("/")}
+                        onClick={() => router.push("/FantasyQuizzesKingdom")}
                         className="text-slate-500 hover:text-amber-500"
                     >
                         <Home className="mr-2 h-4 w-4" /> ホームに戻る
