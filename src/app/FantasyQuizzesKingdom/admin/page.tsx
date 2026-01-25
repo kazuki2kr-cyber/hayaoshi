@@ -81,7 +81,7 @@ export default function AdminPage() {
                         <div className="grid grid-cols-1 gap-4 py-4">
                             <Button
                                 variant="outline"
-                                onClick={() => router.push("/admin/questions")}
+                                onClick={() => router.push("/FantasyQuizzesKingdom/admin/questions")}
                                 className="h-20 border-white/10 hover:border-amber-500/50 flex flex-col items-center justify-center gap-1 group transition-all"
                             >
                                 <div className="flex items-center gap-2 group-hover:gold-text">
@@ -93,7 +93,7 @@ export default function AdminPage() {
 
                             <Button
                                 variant="outline"
-                                onClick={() => router.push("/admin/ranking")}
+                                onClick={() => router.push("/FantasyQuizzesKingdom/admin/ranking")}
                                 className="h-20 border-white/10 hover:border-amber-500/50 flex flex-col items-center justify-center gap-1 group transition-all"
                             >
                                 <div className="flex items-center gap-2 group-hover:gold-text">

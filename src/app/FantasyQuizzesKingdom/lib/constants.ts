@@ -19,7 +19,7 @@ export const QUIZ_CATEGORIES: QuizCategory[] = [
     {
         id: "history",
         name: "歴史",
-        description: "歴史のロマンに浸る",
+        description: "歴史の知識を試す",
         icon: BookOpen,
         color: "text-blue-400"
     },
@@ -32,8 +32,8 @@ export const QUIZ_CATEGORIES: QuizCategory[] = [
     },
     {
         id: "f1",
-        name: "F1",
-        description: "最速の世界を知る",
+        name: "Formula 1",
+        description: "F1の世界の知識で競う",
         icon: Flag, // Using Flag for racing
         color: "text-red-400"
     },
