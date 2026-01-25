@@ -43,7 +43,7 @@ interface Ranking {
 
 function SoloGameContent() {
     // Removed useSearchParams for category. Default is now managed by local state.
-    const [category, setCategory] = useState<string>("general");
+    const [category, setCategory] = useState<string>("party");
 
     const [gameState, setGameState] = useState<GameState>("lobby");
     const [nickname, setNickname] = useState("");
@@ -68,9 +68,12 @@ function SoloGameContent() {
     // Fetch Rankings for Lobby - depends on selected category
     useEffect(() => {
         if (gameState === "lobby") {
+            setRankings([]); // Clear previous rankings immediately
+
             const fetchRankings = async () => {
                 try {
                     let q;
+                    // First try optimized query with index
                     if (category === "all") {
                         q = query(
                             collection(db, "leaderboard"),
@@ -92,32 +95,40 @@ function SoloGameContent() {
                     const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Ranking));
                     setRankings(list);
                 } catch (error: any) {
-                    // Fallback if composite index is missing
+                    console.warn("Primary ranking query failed (missing index?), trying fallback:", error.message);
+
+                    // Fallback: Fetch without complex sort and sort clientside
+                    // This creates a simpler query that usually works without composite indexes
                     try {
                         let qFallback;
                         if (category === "all") {
                             qFallback = query(
                                 collection(db, "leaderboard"),
                                 orderBy("score", "desc"),
-                                limit(10)
+                                limit(50) // Fetch more to sort clientside
                             );
                         } else {
                             qFallback = query(
                                 collection(db, "leaderboard"),
                                 where("category", "==", category),
-                                orderBy("score", "desc"),
-                                limit(10)
+                                limit(50)
                             );
                         }
 
                         const snap = await getDocs(qFallback);
-                        const list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Ranking));
-                        setRankings(list);
+                        let list = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Ranking));
 
-                        // Silent fallback unless debugging
-                        // console.warn("Using fallback ranking query", error.message);
+                        // Manual Sort: Score desc, then Time asc
+                        list.sort((a, b) => {
+                            if (b.score !== a.score) return b.score - a.score;
+                            return a.totalTime - b.totalTime;
+                        });
+
+                        setRankings(list.slice(0, 10));
                     } catch (fallbackError: any) {
-                        console.error("Ranking fetch failed:", fallbackError);
+                        console.error("Ranking fetch fallback failed:", fallbackError);
+                        // Ensure list is empty on error
+                        setRankings([]);
                     }
                 }
             };
