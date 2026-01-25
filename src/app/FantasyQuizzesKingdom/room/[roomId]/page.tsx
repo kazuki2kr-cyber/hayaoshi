@@ -42,7 +42,7 @@ export default function GuestLobby() {
                 setRoomStatus(data.status);
 
                 if (data.status === "playing" && isJoined) {
-                    router.push(`/room/${roomId}/play`);
+                    router.push(`/FantasyQuizzesKingdom/room/${roomId}/play`);
                 }
             } else {
                 setRoomExists(false);

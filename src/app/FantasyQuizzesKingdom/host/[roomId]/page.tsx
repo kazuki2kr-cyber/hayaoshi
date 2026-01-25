@@ -90,7 +90,7 @@ export default function HostDashboard() {
     }, [roomId, user, authLoading, router, toast]);
 
     const handleCopyInvite = () => {
-        const url = `${window.location.origin}/room/${roomId}`;
+        const url = `${window.location.origin}/FantasyQuizzesKingdom/room/${roomId}`;
         navigator.clipboard.writeText(url);
         toast({
             title: "召喚コードをコピーしました",
@@ -255,8 +255,8 @@ export default function HostDashboard() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <div className="bg-black/40 border border-amber-900/50 rounded-2xl p-4 flex items-center gap-4 backdrop-blur-md">
+                    <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
+                        <div className="bg-black/40 border border-amber-900/50 rounded-2xl p-4 flex items-center justify-between md:justify-start gap-4 backdrop-blur-md">
                             <div>
                                 <p className="rpg-label">参加コード</p>
                                 <p className="text-3xl font-black font-mono tracking-tighter text-amber-400">{roomId}</p>
@@ -265,7 +265,7 @@ export default function HostDashboard() {
                                 <Copy className="h-6 w-6" />
                             </Button>
                         </div>
-                        <Button onClick={handleStartGame} size="lg" className="h-20 px-10 rounded-2xl bg-amber-600 hover:bg-amber-500 text-black font-black text-xl shadow-xl shadow-amber-900/20 group">
+                        <Button onClick={handleStartGame} size="lg" className="h-16 md:h-20 px-6 md:px-10 rounded-2xl bg-amber-600 hover:bg-amber-500 text-black font-black text-lg md:text-xl shadow-xl shadow-amber-900/20 group">
                             クイズを開始する <Play className="ml-2 fill-current group-hover:scale-125 transition-transform" />
                         </Button>
                     </div>

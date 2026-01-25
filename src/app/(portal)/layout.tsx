@@ -1,6 +1,5 @@
-
 import Link from 'next/link';
-import { Terminal } from 'lucide-react';
+import SiteHeader from './components/SiteHeader';
 
 export default function PortalLayout({
     children,
@@ -10,26 +9,7 @@ export default function PortalLayout({
     return (
         <div className="min-h-screen bg-neutral-900 text-neutral-100 font-mono">
             {/* Header */}
-            <header className="border-b border-neutral-800 bg-neutral-900/80 backdrop-blur-md sticky top-0 z-50">
-                <div className="max-w-screen-xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        {/* Brand Logo Image */}
-                        <div className="relative w-40 h-10">
-                            <img
-                                src="/sparks-station-kv.png"
-                                alt="Sparks Station"
-                                className="object-contain w-full h-full"
-                            />
-                        </div>
-                    </Link>
-
-                    <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-neutral-400">
-                        <Link href="/" className="hover:text-emerald-400 transition-colors">Insights</Link>
-                        <Link href="/products" className="hover:text-emerald-400 transition-colors">Products</Link>
-                        <Link href="/about" className="hover:text-emerald-400 transition-colors">About</Link>
-                    </nav>
-                </div>
-            </header>
+            <SiteHeader />
 
             <main className="max-w-screen-xl mx-auto px-6 py-12">
                 {children}

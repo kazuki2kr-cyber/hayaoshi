@@ -208,7 +208,7 @@ export default function GuestPlay() {
                     </motion.div>
                 </AnimatePresence>
 
-                <div className="w-full max-w-xl mx-auto grid grid-cols-1 gap-4">
+                <div className="w-full max-w-xl mx-auto grid grid-cols-2 lg:grid-cols-1 gap-2 md:gap-4">
                     {currentQuestion.choices.map((choice: string, i: number) => {
                         const isSelected = selectedAnswer === i;
                         const isCorrectAnswer = room.currentPhase === "result" && i === currentQuestion.correctAnswer;
@@ -221,7 +221,7 @@ export default function GuestPlay() {
                                 whileTap={selectedAnswer === null ? { scale: 0.98 } : {}}
                                 onClick={() => handleAnswer(i)}
                                 disabled={selectedAnswer !== null || room.currentPhase !== "question"}
-                                className={`relative group p-6 rounded-2xl border-2 text-left font-black text-xl transition-all h-20 flex items-center gap-6 overflow-hidden ${isSelected ? "z-20 scale-105 shadow-2xl" : "z-10"
+                                className={`relative group p-4 md:p-6 rounded-2xl border-2 text-left font-black text-sm md:text-xl transition-all h-24 md:h-20 flex flex-col md:flex-row items-center md:gap-6 justify-center md:justify-start overflow-hidden ${isSelected ? "z-20 scale-105 shadow-2xl" : "z-10"
                                     } ${isCorrectAnswer ? "bg-green-600 border-green-400 text-white shadow-[0_0_25px_rgba(34,197,94,0.5)]" :
                                         isWrongAnswer ? "bg-red-600 border-red-400 text-white shadow-[0_0_25px_rgba(239,68,68,0.5)]" :
                                             isSelected ? "bg-amber-600 border-amber-400 text-black shadow-[0_0_25px_rgba(251,191,36,0.5)]" :
