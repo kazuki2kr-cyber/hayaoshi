@@ -17,9 +17,6 @@ export default function Footer() {
                 </div>
 
                 <nav className="flex flex-wrap justify-center gap-8 text-sm font-bold uppercase tracking-widest text-white/40">
-                    <Link href="/" className="hover:text-amber-500 transition-colors">
-                        Sparks Station
-                    </Link>
                     <Link href="/FantasyQuizzesKingdom" className="hover:text-amber-500 transition-colors">
                         ホーム
                     </Link>
@@ -34,6 +31,9 @@ export default function Footer() {
                         className="hover:text-amber-500 transition-colors"
                     >
                         お問い合わせ
+                    </Link>
+                    <Link href="/" className="hover:text-amber-500 transition-colors">
+                        Sparks Station
                     </Link>
                 </nav>
 

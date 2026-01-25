@@ -163,14 +163,30 @@ export default function HostDashboard() {
             const batch = writeBatch(db);
             selected.forEach((q, index) => {
                 const newQRef = doc(questionsRef);
-                const choices = q.options || q.choices || [];
-                const correctIndex = q.correctIndex ?? q.correctAnswer ?? 0;
+                const originalChoices = q.options || q.choices || [];
+                const originalCorrectIndex = q.correctIndex ?? q.correctAnswer ?? 0;
 
-                if (choices.length > 0) {
+                if (originalChoices.length > 0) {
+                    // Create an array of objects to shuffle, keeping track of original text and index
+                    const choiceObjects = originalChoices.map((text: string, i: number) => ({
+                        text,
+                        isCorrect: i === originalCorrectIndex
+                    }));
+
+                    // Shuffle the array
+                    for (let i = choiceObjects.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [choiceObjects[i], choiceObjects[j]] = [choiceObjects[j], choiceObjects[i]];
+                    }
+
+                    // Extract new choices and find the new correct index
+                    const shuffledChoices = choiceObjects.map((c: any) => c.text);
+                    const newCorrectIndex = choiceObjects.findIndex((c: any) => c.isCorrect);
+
                     batch.set(newQRef, {
                         text: q.text || "No Question Text",
-                        choices: choices,
-                        correctAnswer: correctIndex,
+                        choices: shuffledChoices,
+                        correctAnswer: newCorrectIndex,
                         timeLimit: q.timeLimit || 20,
                         points: q.points || 1000,
                         createdAt: Date.now() + index,
