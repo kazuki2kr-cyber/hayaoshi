@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { QUIZ_CATEGORIES } from "../lib/constants";
 import FantasyCountdown from "../components/FantasyCountdown";
+import ScoreCard from "../components/ScoreCard";
 
 type GameState = "lobby" | "playing" | "result";
 

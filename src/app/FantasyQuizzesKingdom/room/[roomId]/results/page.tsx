@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Trophy, Home, Crown, Star, Sparkles, Sword, Scroll } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import AdBanner from "@/components/AdBanner";
+import ScoreCard from "@/app/FantasyQuizzesKingdom/components/ScoreCard";
 
 export default function GuestResults() {
     const { roomId } = useParams() as { roomId: string };
@@ -60,47 +61,30 @@ export default function GuestResults() {
                 </header>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    {/* My Result Card */}
+                    {/* My Result Card - ScoreCard Implementation */}
                     <motion.div
                         initial={{ x: -50, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
+                        className="flex flex-col gap-4"
                     >
-                        <Card className="fantasy-card border-none bg-black/60 p-10 text-center relative overflow-visible">
-                            <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-10 py-3 bg-amber-950 border-2 border-amber-500 rounded-full text-amber-500 font-black tracking-widest text-lg shadow-2xl">
-                                YOUR RANK
-                            </div>
+                        <ScoreCard
+                            playerName={myPlayer.name}
+                            genre="BATTLE" // Multi uses room category, but hardcoded or derived. Let's use fixed generic or try to fetch room info if possible, but simplicity: BATTLE
+                            score={myPlayer.score}
+                            rank={`${myRank} / ${players.length}`}
+                            rankLabel="POSITION"
+                        />
 
-                            <div className="pt-8 space-y-6">
-                                <div className="relative inline-block">
-                                    <div className="text-8xl font-black italic gold-text tracking-tighter drop-shadow-[0_0_20px_rgba(251,191,36,0.5)]">
-                                        #{myRank}
-                                    </div>
-                                    <div className="absolute -top-4 -right-8 h-12 w-12 bg-amber-500 text-black rounded-full flex items-center justify-center font-black animate-bounce">
-                                        <Star className="h-6 w-6 fill-current" />
-                                    </div>
-                                </div>
-
-                                <div className="space-y-1">
-                                    <p className="text-2xl font-black text-white">{myPlayer.name} 様</p>
-                                    <p className="text-amber-200/40 text-sm italic font-bold">
-                                        {myRank === 1 ? "優勝おめでとうございます！" :
-                                            myRank! <= 3 ? "TOP3入賞おめでとう！" :
-                                                "ナイスチャレンジ！"}
-                                    </p>
-                                </div>
-
-                                <div className="pt-6 border-t border-white/5 grid grid-cols-2 gap-4">
-                                    <div className="text-left p-4 rounded-xl bg-black/30 border border-white/5">
-                                        <p className="rpg-label text-[10px]">スコア (Score)</p>
-                                        <p className="font-mono text-2xl font-black text-amber-400">{myPlayer.score.toLocaleString()} pt</p>
-                                    </div>
-                                    <div className="text-left p-4 rounded-xl bg-black/30 border border-white/5">
-                                        <p className="rpg-label text-[10px]">合計時間 (Time)</p>
-                                        <p className="font-mono text-2xl font-black text-white">{myPlayer.totalTime.toFixed(1)}s</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card>
+                        <Button
+                            onClick={() => {
+                                const text = `【TRIAL RECORD】\nName: ${myPlayer.name}\nScore: ${myPlayer.score}pt\nPosition: ${myRank}/${players.length}\n\n#FantasyQuizzesKingdom #SparksStation #クイズバトル`;
+                                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.origin)}`, '_blank');
+                            }}
+                            className="w-full h-14 bg-black text-white hover:bg-black/80 font-bold rounded-xl border border-white/10 flex items-center justify-center gap-2"
+                        >
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                            結果をXでポスト
+                        </Button>
                     </motion.div>
 
                     {/* Podium for top 3 */}
