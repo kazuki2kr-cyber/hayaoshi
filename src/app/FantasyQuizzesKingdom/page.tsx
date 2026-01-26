@@ -418,9 +418,9 @@ export default function Home() {
                       <PartyPopper className="h-6 w-6 text-pink-400" />
                     </div>
                     <div>
-                      <h3 className="text-pink-400 font-bold mb-2">パーティ・宴会</h3>
+                      <h3 className="text-pink-400 font-bold mb-2">パーティ</h3>
                       <p className="text-amber-100/70 text-sm leading-relaxed">
-                        忘年会、新年会、結婚式の二次会など、人が集まる場を最高に盛り上げるパーティ早押しクイズ。みんなが答えられる一般的な常識問題！
+                        とりあえずこれ！友人同士のクイズ大会、忘年会、新年会、結婚式の二次会など、人が集まる場を最高に盛り上げるパーティ早押しクイズ。みんなが答えられる一般的な常識問題！
                       </p>
                     </div>
                   </div>
@@ -431,7 +431,7 @@ export default function Home() {
                       <BookOpen className="h-6 w-6 text-blue-400" />
                     </div>
                     <div>
-                      <h3 className="text-blue-400 font-bold mb-2">歴史・雑学</h3>
+                      <h3 className="text-blue-400 font-bold mb-2">歴史</h3>
                       <p className="text-amber-100/70 text-sm leading-relaxed">
                         日本史、世界史、歴史的事件、偉人まで。あなたの知識教養が試される本格的なクイズバトル。受験勉強の息抜きや、大人の嗜みとしての雑学力向上にも最適です。
                       </p>
