@@ -435,12 +435,12 @@ function SoloGameContent() {
                             </h2>
                             <div className="space-y-6">
                                 <div>
-                                    <h3 className="text-amber-400 font-bold mb-1">登録不要で即冒険</h3>
+                                    <h3 className="text-amber-400 font-bold mb-1">登録不要で即挑戦</h3>
                                     <p className="text-amber-100/60 text-sm">面倒な登録は一切不要。今すぐ開始できます。</p>
                                 </div>
                                 <div>
                                     <h3 className="text-amber-400 font-bold mb-1">全国ランキングに挑戦</h3>
-                                    <p className="text-amber-100/60 text-sm">全国の騎士たちと競い、伝説の賢者を目指しましょう。</p>
+                                    <p className="text-amber-100/60 text-sm">全国のプレイヤーと競い、頂点を目指しましょう。</p>
                                 </div>
                             </div>
                         </motion.div>
