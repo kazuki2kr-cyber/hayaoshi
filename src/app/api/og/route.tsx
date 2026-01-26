@@ -1,7 +1,5 @@
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 
 export async function GET(req: NextRequest) {
     try {
@@ -18,9 +16,13 @@ export async function GET(req: NextRequest) {
         ).then((res) => res.arrayBuffer());
 
         // Load Background Image
-        // Use filesystem for reliability in Node.js runtime
-        const bgPath = path.join(process.cwd(), 'public', 'score-card-bg.png');
-        const bgImageData = fs.readFileSync(bgPath);
+        // Use import.meta.url to ensure the asset is bundled and accessible in the serverless function
+        // Path: src/app/api/og/route.tsx -> ../../../../public/score-card-bg.png
+        const bgImageParams = new URL('../../../../public/score-card-bg.png', import.meta.url);
+        const bgImageData = await fetch(bgImageParams).then((res) => {
+            if (!res.ok) throw new Error(`Failed to load background image: ${res.status} ${res.statusText}`);
+            return res.arrayBuffer();
+        });
 
         const base64Bg = Buffer.from(bgImageData).toString('base64');
         const bgSrc = `data:image/png;base64,${base64Bg}`;
@@ -166,8 +168,8 @@ export async function GET(req: NextRequest) {
             }
         );
     } catch (e: any) {
-        console.log(`${e.message}`);
-        return new Response(`Failed to generate the image`, {
+        console.error('OG Image Generation Error:', e);
+        return new Response(`Failed to generate the image: ${e.message}`, {
             status: 500,
         });
     }
