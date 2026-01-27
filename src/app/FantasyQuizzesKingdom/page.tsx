@@ -496,6 +496,9 @@ export default function Home() {
           </div>
         </motion.main>
       )}
+      <div className="fixed bottom-1 right-1 text-[10px] text-white/10 z-50 font-mono pointer-events-none">
+        v1.2.0 (Winter Update)
+      </div>
     </AnimatePresence>
   );
 }
