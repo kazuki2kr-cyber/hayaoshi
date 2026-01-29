@@ -17,7 +17,6 @@ type ToolItem = {
     tags: string[];
     link: string; // Affiliate link
     isAffiliate?: boolean;
-    buttonText?: string;
     trackingPixel?: string;
 };
 
@@ -37,7 +36,7 @@ const toolsData: ToolCategory[] = [
                 description: "もはや「相棒」。VS Code派生のエディタに最強のAIが統合されています。コードベース全体を理解したチャット機能は、開発速度を劇的に向上させます。",
                 tags: ["Editor", "AI", "Must Have"],
                 link: "https://cursor.sh/",
-                buttonText: "公式サイト",
+
             },
             {
                 name: "VS Code",
@@ -50,7 +49,6 @@ const toolsData: ToolCategory[] = [
                 description: "Google DeepMindが開発中の次世代エージェントAI。高度な推論能力と自律的なコーディング能力を持ち、開発者の意図を汲み取って実装まで完遂します。",
                 tags: ["AI Agent", "DeepMind", "Future"],
                 link: "https://deepmind.google/technologies/gemini/", // Link to Gemini/DeepMind page as placeholder or specific if known
-                buttonText: "詳細を見る",
             },
             {
                 name: "NotebookLM",
@@ -75,7 +73,6 @@ const toolsData: ToolCategory[] = [
                 description: "フロントエンドのデプロイはこれ一択。GitHubにプッシュするだけで自動デプロイされる体験と、Next.jsへの最適化は他に代えがたい価値があります。",
                 tags: ["Hosting", "Serverless", "Next.js"],
                 link: "https://vercel.com/",
-                buttonText: "無料で始める",
             },
             {
                 name: "Firebase",
@@ -110,7 +107,6 @@ const toolsData: ToolCategory[] = [
                 link: "https://px.a8.net/svt/ejp?a8mat=4AVHBZ+AG9Z3M+0K+11O3G2",
                 isAffiliate: true,
                 trackingPixel: "https://www18.a8.net/0.gif?a8mat=4AVHBZ+AG9Z3M+0K+11O3G2",
-                buttonText: "無料登録する",
             }
         ]
     }
@@ -125,9 +121,6 @@ export default function ToolsPage() {
                     Sparks Stationの運営で使用している「開発効率を上げるツール」たち。
                     <br className="hidden md:block" />
                     これらは私たちの開発ライフを支える、頼れる相棒です。
-                </p>
-                <p className="text-xs text-neutral-500 border border-neutral-800 bg-neutral-900/50 inline-block px-3 py-1 rounded-full">
-                    ※本ページはプロモーションが含まれています
                 </p>
             </header>
 
@@ -164,19 +157,14 @@ export default function ToolsPage() {
                                     </div>
 
                                     <div className="pt-4 border-t border-neutral-800">
+
                                         <a
                                             href={tool.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`
-                                                inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg w-full justify-center transition-colors
-                                                ${tool.isAffiliate
-                                                    ? 'bg-amber-500/10 text-amber-500 hover:bg-amber-500/20'
-                                                    : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
-                                                }
-                                            `}
+                                            className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg w-full justify-center transition-colors bg-neutral-800 text-neutral-300 hover:bg-neutral-700 hover:text-white"
                                         >
-                                            {tool.buttonText || "公式サイト"}
+                                            公式サイト
                                             <ExternalLink className="w-4 h-4" />
                                         </a>
                                         {/* Tracking Pixel for A8.net etc */}
@@ -196,6 +184,12 @@ export default function ToolsPage() {
                         </div>
                     </section>
                 ))}
+            </div>
+
+            <div className="flex justify-end mt-12">
+                <p className="text-xs text-neutral-600">
+                    ※本ページはプロモーションが含まれています
+                </p>
             </div>
         </div>
     );
